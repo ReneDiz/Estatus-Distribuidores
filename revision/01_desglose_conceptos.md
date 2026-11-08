@@ -2,7 +2,7 @@
 
 Fuente: `datos/KPIS.xlsx`. Columna P = Concepto, Q = Requerido, R = Adquirido. Corte: 9-nov-2026 (se usa el último mes disponible ≤ corte).
 
-Estatus: ✅ cumple (R ≥ Q) · ⚠️ parcial (0 < R < Q, **pendiente de definir**) · ❌ no cumple (R = 0)
+Estatus: ✅ cumple (R ≥ Q) · ⚠️ parcial (0 < R < Q: cuenta su avance R/Q, confirmado) · ❌ no cumple (R = 0)
 
 ## Foton Apodaca
 ### % Desarrollo de Proyecto — hoja «% DE DESARRO PROYEC», mes 2026-10, filas 12242–12340
