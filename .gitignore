@@ -1,0 +1,3 @@
+# Contiene datos personales (nombres, correos, teléfonos): no se versiona
+datos/personal-activo-*.xlsx
+__pycache__/
