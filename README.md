@@ -45,6 +45,24 @@ Cuando actualices los Excel, reemplázalos en `datos/` (mismo nombre o ajusta la
 - **Pendientes:** todo lo que no está al 100% va al plan de trabajo con prioridad ALTA (aunque el
   semáforo esté en verde). Cada concepto incompleto y cada puesto con vacantes es un pendiente.
 
+## Ajustes manuales (`datos/ajustes.json`)
+
+Para confirmaciones de campo que todavía no están en el Excel de KPI's (p. ej. un anexo ya firmado
+o una certificación nueva). Cada ajuste reemplaza el *Adquirido* de un concepto y, opcionalmente, el
+texto del pendiente (`falta`); el % y el semáforo se recalculan. En el HTML aparece la etiqueta
+«Ajuste: …» junto al dato. Cuando el Excel ya traiga el dato, borra el ajuste.
+
+```json
+{ "distribuidor": "escobedo", "indicador": "cummins",
+  "concepto": "Ceritificación Tecnicos o Gerente de Posventa o Gerente de Taller",
+  "adquirido": 1, "fecha": "2026-11-10",
+  "nota": "El técnico ya está certificado; falta certificar al jefe de taller",
+  "falta": "Certificar al jefe de taller (1 de 2 acreditados)" }
+```
+
+Ajustes vigentes (10-nov-2026): anexos 2026 firmados en Apodaca, Escobedo y Allende; Escobedo Cummins
+sigue en 1 de 2, ahora el pendiente es la certificación del jefe de taller.
+
 ## Semáforo (`config.json` → `semaforo`)
 
 | Regla | Verde | Amarillo | Rojo |

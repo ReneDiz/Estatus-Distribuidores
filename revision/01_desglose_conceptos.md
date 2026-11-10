@@ -2,6 +2,8 @@
 
 Fuente: `datos/KPIS.xlsx`. Columna P = Concepto, Q = Requerido, R = Adquirido. Corte: 9-nov-2026 (se usa el último mes disponible ≤ corte).
 
+> Actualización 10-nov-2026: los anexos 2026 de las 3 agencias ya están firmados y Escobedo Cummins sigue en 1 de 2 (falta el jefe de taller). Se registran en `datos/ajustes.json`; este desglose conserva el dato original del Excel.
+
 Estatus: ✅ cumple (R ≥ Q) · ⚠️ parcial (0 < R < Q: cuenta su avance R/Q, confirmado) · ❌ no cumple (R = 0)
 
 ## Foton Apodaca

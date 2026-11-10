@@ -10,7 +10,8 @@
   "archivos": {
     "kpis": "datos/KPIS.xlsx",
     "personal_sistema": "datos/Sistema_Personal_FOTON_v19_Regionales-Noviembre.xlsx",
-    "fotos": "datos/fotos/fotos.json"
+    "fotos": "datos/fotos/fotos.json",
+    "ajustes": "datos/ajustes.json"
   },
 
   "semaforo": {

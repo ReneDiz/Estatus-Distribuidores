@@ -277,7 +277,34 @@ class Fotos:
 
 
 # --------------------------------------------------------------------------- cálculo
-def evaluar(cfg, grupo, kpi, per, fotos, corte):
+def cargar_ajustes(ruta):
+    """Ajustes manuales (datos/ajustes.json): confirmaciones de campo que aún no están en el Excel."""
+    if not ruta or not os.path.exists(ruta):
+        return []
+    return json.load(open(ruta, encoding="utf-8")).get("ajustes", [])
+
+
+def aplicar_ajustes(x, ajustes):
+    """Sustituye el 'Adquirido' de los conceptos indicados y recalcula el % del indicador."""
+    for a in ajustes:
+        c = next((c for c in x["conceptos"] if norm(c["concepto"]) == norm(a["concepto"])), None)
+        if c is None:
+            print(f"  aviso: ajuste sin concepto que coincida: {a['distribuidor']} / {a['indicador']} / {a['concepto']}",
+                  file=sys.stderr)
+            continue
+        if a.get("adquirido") is not None:
+            c["adq"] = float(a["adquirido"])
+            c["avance"] = min(c["adq"] / c["req"], 1.0) if c["req"] > 0 else (1.0 if c["adq"] else 0.0)
+        if a.get("falta"):
+            c["falta"] = a["falta"]
+        c["ajuste"] = a.get("nota", "Ajuste manual")
+        x.setdefault("ajustes", []).append(
+            f'{a.get("nota", "Ajuste manual")}' + (f' ({fecha_corta(dt.date.fromisoformat(a["fecha"]))})' if a.get("fecha") else ""))
+    if ajustes:
+        x["valor"] = 100.0 * sum(c["avance"] for c in x["conceptos"]) / len(x["conceptos"])
+
+
+def evaluar(cfg, grupo, kpi, per, fotos, corte, ajustes=()):
     reglas = cfg["semaforo"]
     resultado = []
     for d in grupo["distribuidores"]:
@@ -293,7 +320,9 @@ def evaluar(cfg, grupo, kpi, per, fotos, corte):
             if ind["fuente"] == "kpi":
                 x = kpi.indicador(ind["hoja"], d["nombre_kpi"], corte)
                 if x:
-                    r.update(valor=x["valor"], mes=x["mes"], conceptos=x["conceptos"], fuente=x["ubicacion"])
+                    aplicar_ajustes(x, [a for a in ajustes if a["distribuidor"] == d["id"] and a["indicador"] == ind["id"]])
+                    r.update(valor=x["valor"], mes=x["mes"], conceptos=x["conceptos"], fuente=x["ubicacion"],
+                             ajustes=x.get("ajustes", []))
                     for c in x["conceptos"]:
                         c["foto"] = fotos.para_concepto(d["id"], ind["id"], c["concepto"])
                 else:
@@ -320,7 +349,9 @@ def evaluar(cfg, grupo, kpi, per, fotos, corte):
             elif ind["con_conceptos"] or len(r["conceptos"]) > 1:
                 for c in r["conceptos"]:
                     if c["avance"] < 1:
-                        if c["adq"] <= 0:
+                        if c.get("falta"):
+                            falta = c["falta"]
+                        elif c["adq"] <= 0:
                             falta = "No cumple: implementar / obtener"
                         elif c["req"] > 1:
                             falta = f"Tiene {c['adq']:g} de {c['req']:g} requeridos ({pct(c['avance'] * 100, 0)})"
@@ -429,10 +460,11 @@ def render_tarjeta(i, corte):
         viejo = f' <span class="stale" title="Último dato disponible en el Excel">dato a {mes_txt(i["mes"])}</span>'
     elif i.get("mes"):
         viejo = f' <span class="muted">dato a {mes_txt(i["mes"])}</span>'
+    ajuste = "".join(f'<p class="ajuste">Ajuste: {esc(a)}</p>' for a in i.get("ajustes", []))
     return (f'<article class="card {i["estado"]}">{icono(ICONO_IND[i["id"]], "ico big")}<h4>{esc(i["nombre"])}</h4>'
             f'<div class="val">{pct(i["valor"])}</div>{meter(i["valor"], i["estado"])}'
             f'<div class="cardrow">{pill(i["estado"])}<span class="gap {"cero" if brecha == 0 else ""}">'
-            f'Brecha {pct(brecha)}</span></div><p class="note">{esc(detalle)}{viejo}</p></article>')
+            f'Brecha {pct(brecha)}</span></div><p class="note">{esc(detalle)}{viejo}</p>{ajuste}</article>')
 
 
 def render_conceptos(i, titulo_extra=""):
@@ -448,7 +480,9 @@ def render_conceptos(i, titulo_extra=""):
                   else icono(icono_subtema(c["subtema"]), "ico mid"))
         avance = f'{c["adq"]:g} / {c["req"]:g}' if c["req"] != 1 else pct(c["avance"] * 100, 0)
         filas.append(f'<tr class="{e}"><td class="vis">{visual}</td><td><b>{esc(c["concepto"])}</b>'
-                     f'<div class="muted">{esc(c["subtema"])}</div></td><td class="num">{avance}</td>'
+                     f'<div class="muted">{esc(c["subtema"])}</div>'
+                     + (f'<div class="ajuste">Ajuste: {esc(c["ajuste"])}</div>' if c.get("ajuste") else "")
+                     + f'</td><td class="num">{avance}</td>'
                      f'<td>{pill(e, "Parcial" if e == "amarillo" else None)}</td></tr>')
     # cumplidos agrupados por subtema
     grupos = {}
@@ -520,7 +554,8 @@ def render_simple(i):
     c = i["conceptos"][0]
     e = estado_concepto(c)
     return (f'<tr class="{e}"><td class="vis">{icono(ICONO_IND[i["id"]], "ico mid")}</td><td><b>{esc(i["nombre"])}</b>'
-            f'<div class="muted">{esc(c["concepto"])} · {esc(i["fuente"])} · dato a {mes_txt(i["mes"])}</div></td>'
+            f'<div class="muted">{esc(c["concepto"])} · {esc(i["fuente"])} · dato a {mes_txt(i["mes"])}</div>'
+            + (f'<div class="ajuste">Ajuste: {esc(c["ajuste"])}</div>' if c.get("ajuste") else "") + '</td>'
             f'<td>{pill(e)}</td></tr>')
 
 
@@ -678,6 +713,7 @@ button:hover{background:var(--navy);color:#fff}
 .cardrow{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 .gap{font-weight:700;color:var(--crit)}.gap.cero{color:var(--muted);font-weight:500}
 .note{font-size:13px;color:var(--ink2);margin:8px 0 0}.muted{color:var(--muted);font-size:13px}
+.ajuste{font-size:12.5px;color:#1f4e86;background:#e8f0fa;border-radius:4px;padding:2px 6px;margin:4px 0 0;display:inline-block}
 .stale{background:#eef0f3;border-radius:4px;padding:1px 6px;font-size:12px;color:var(--ink2);font-weight:600}
 .block{margin:26px 0 0;padding-top:14px;border-top:1px solid var(--line)}
 .h3val{margin-left:auto;display:inline-flex;gap:8px;align-items:center;font-size:18px}
@@ -826,13 +862,14 @@ def main():
     kpi = LectorKPI(ruta(cfg["archivos"]["kpis"]))
     per = LectorPersonal(ruta(cfg["archivos"]["personal_sistema"]))
     fotos = Fotos(ruta(cfg["archivos"]["fotos"]), cfg, corte)
+    ajustes = cargar_ajustes(ruta(cfg["archivos"]["ajustes"])) if cfg["archivos"].get("ajustes") else []
     salida = ruta(cfg["carpeta_salida"])
     os.makedirs(salida, exist_ok=True)
     grupos = [g for g in cfg["grupos"] if not a.grupo or g["id"] == a.grupo]
     if not grupos:
         raise SystemExit(f"No existe el grupo «{a.grupo}» en config.json")
     for g in grupos:
-        dists = evaluar(cfg, g, kpi, per, fotos, corte)
+        dists = evaluar(cfg, g, kpi, per, fotos, corte, ajustes)
         out = os.path.join(salida, g["archivo_salida"])
         with open(out, "w", encoding="utf-8") as fh:
             fh.write(render_html(g, dists, cfg, corte))
