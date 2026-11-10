@@ -61,7 +61,8 @@ texto del pendiente (`falta`); el % y el semáforo se recalculan. En el HTML apa
 ```
 
 Ajustes vigentes (10-nov-2026): anexos 2026 firmados en Apodaca, Escobedo y Allende; Escobedo Cummins
-sigue en 1 de 2, ahora el pendiente es la certificación del jefe de taller.
+sigue en 1 de 2, ahora el pendiente es la certificación del jefe de taller; Apodaca ya tiene el letrero
+Total Care y el kit inicial de partes al 100% (proyecto).
 
 ## Semáforo (`config.json` → `semaforo`)
 
