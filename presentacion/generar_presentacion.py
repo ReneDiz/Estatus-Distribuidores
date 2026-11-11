@@ -979,6 +979,45 @@ def cierre(dk, ctx):
                                   for k, p in enumerate(pasos)], color=BLANCO)
 
 
+def evidencia_validar(dk, ctx, fotos):
+    """Una sola lámina: fotos de lo pendiente o por validar y los puntos que hay que confirmar en la visita."""
+    s = dk.nueva(fondo=FONDO_MAPA, notas="Fotos de la visita más reciente disponible (más de 6 meses: «Foto no reciente»). "
+                                         "Abajo, lo que se ve en campo y no coincide con el KPI o falta información.")
+    titulo(s, "Evidencia y puntos a validar", "Lo que se ve en campo y lo que hay que confirmar en la visita")
+    n = len(fotos)
+    gap = 0.15
+    w = (ANCHO - gap * (n - 1)) / n
+    h = 1.55
+    for k, (ruta, pie_txt, estado, no_rec) in enumerate(fotos):
+        x = X0 + k * (w + gap)
+        dk.imagen(s, dk.foto(ruta, w, h), x, Y_CONT, w, h, f"Foto {k + 1}", pie_txt)
+        if no_rec:
+            caja(s, x + 0.06, Y_CONT + 0.06, 1.15, 0.24, "000000", radio=0.05, alpha=0.6)
+            texto(s, x + 0.06, Y_CONT + 0.06, 1.15, 0.24, "Foto no reciente", size=7.5, bold=True, align="c", anchor="m", color="FFFFFF")
+        punto(s, x, Y_CONT + h + 0.1, 0.13, estado)
+        texto(s, x + 0.2, Y_CONT + h + 0.06, w - 0.2, 0.45, pie_txt, size=8.5, color=BLANCO)
+    items = [(d["corto"], o.get("texto_presentacion") or o["texto"]) for d in ctx["dists"] for o in d["observaciones"]]
+    y0 = Y_CONT + h + 0.6
+    cols = 2
+    filas_n = -(-len(items) // cols)
+    wc = (ANCHO - 0.15) / cols
+    hc = (Y_FIN - y0 - 0.1 * (filas_n - 1)) / max(filas_n, 1)
+    for k, (ag, t) in enumerate(items):
+        x = X0 + (k % cols) * (wc + 0.15)
+        y = y0 + (k // cols) * (hc + 0.1)
+        caja(s, x, y, wc, hc, TARJETA)
+        texto(s, x + 0.15, y, wc - 0.3, hc, [[(ag + ". ", {"bold": True, "color": CIAN}), (t, {})]], size=9, color=GRIS_CL, anchor="m")
+
+
+EVIDENCIA_GRUPO = [
+    ("apodaca/WhatsApp Image 2026-07-02 at 6.14.58 PM (1).jpeg", "Apodaca. Taller: piso de concreto, falta pintura epóxica.", "rojo"),
+    ("apodaca/WhatsApp Image 2026-07-02 at 6.14.53 PM.jpeg", "Apodaca. Acceso: lona temporal en lugar del tótem.", "rojo"),
+    ("escobedo/WhatsApp Image 2026-08-21 at 9.51.06 AM (1).jpeg", "Escobedo. Tótem en el acceso: validar si cumple.", "amarillo"),
+    ("escobedo/WhatsApp Image 2026-07-02 at 10.25.28 AM (5).jpeg", "Escobedo. Mobiliario actual: validar estándar.", "amarillo"),
+    ("allende/WhatsApp Image 2025-06-27 at 12.56.02 PM (2).jpeg", "Allende. Opera en oficina móvil, sin imagen FOTON.", "rojo"),
+]
+
+
 # =========================================================================== armado
 EVIDENCIAS = {
     "apodaca": [
@@ -1003,16 +1042,29 @@ FACHADAS = {
 }
 
 
-def armar(salida):
+def _fotos(lista, ctx):
+    base = os.path.join(RAIZ, "datos", "fotos")
+    limite = ctx["corte"].toordinal() - round(ctx["cfg"]["meses_foto_reciente"] * 30.44)
+    out = []
+    for arch, pie_txt, est in lista:
+        r = os.path.join(base, arch)
+        if os.path.exists(r):
+            f, _ = g.fecha_foto(r, {"archivo": arch})
+            out.append((r, pie_txt, est, f.toordinal() < limite))
+    return out
+
+
+def armar(salida, completa=False):
+    """Versión ejecutiva (25 láminas) o, con completa=True, la versión extendida con mobiliario, Cummins,
+    personal y evidencia por agencia."""
     ctx = A.cargar()
     dk = Deck(TEMPLATE)
     portada(dk, ctx)
     resumen_ejecutivo(dk, ctx)
     matriz(dk, ctx)
-    concentracion(dk, ctx)
+    if completa:
+        concentracion(dk, ctx)
     escenario_mobiliario(dk, ctx)
-    base_fotos = os.path.join(RAIZ, "datos", "fotos")
-    limite = ctx["corte"].toordinal() - round(ctx["cfg"]["meses_foto_reciente"] * 30.44)
     for d in ctx["dists"]:
         ruta_fachada, nota = FACHADAS.get(d["id"], (None, None))
         if ruta_fachada and os.path.exists(os.path.join(RAIZ, ruta_fachada)):
@@ -1020,17 +1072,15 @@ def armar(salida):
         indicadores(dk, d)
         proyecto_grafica(dk, d)
         areas_detalle(dk, d)
-        mobiliario(dk, d)
-        cummins(dk, d)
-        personal(dk, d)
-        fotos = []
-        for arch, pie_txt, est in EVIDENCIAS.get(d["id"], []):
-            r = os.path.join(base_fotos, arch)
-            if os.path.exists(r):
-                f, _ = g.fecha_foto(r, {"archivo": arch})
-                fotos.append((r, pie_txt, est, f.toordinal() < limite))
-        evidencia(dk, d, fotos, ctx)
-    validar(dk, ctx)
+        if completa:
+            mobiliario(dk, d)
+            cummins(dk, d)
+            personal(dk, d)
+            evidencia(dk, d, _fotos(EVIDENCIAS.get(d["id"], []), ctx), ctx)
+    if completa:
+        validar(dk, ctx)
+    else:
+        evidencia_validar(dk, ctx, _fotos(EVIDENCIA_GRUPO, ctx))
     for d in ctx["dists"]:
         plan(dk, d)
     cierre(dk, ctx)
@@ -1041,9 +1091,12 @@ def armar(salida):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--salida", default=os.path.join(RAIZ, "presentacion", "Grupo_Velcen_Estatus_nov2026.pptx"))
+    ap.add_argument("--salida", default=None)
+    ap.add_argument("--completa", action="store_true",
+                    help="versión extendida (mobiliario, Cummins, personal y evidencia por agencia)")
     a = ap.parse_args()
-    armar(a.salida)
+    nombre = "Grupo_Velcen_Estatus_nov2026_completa.pptx" if a.completa else "Grupo_Velcen_Estatus_nov2026.pptx"
+    armar(a.salida or os.path.join(RAIZ, "presentacion", nombre), a.completa)
 
 
 if __name__ == "__main__":

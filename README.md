@@ -148,18 +148,35 @@ Si aparece un concepto nuevo sin explicación, los generadores avisan en consola
 
 `generar_presentacion.py` abre `template/Foton_Mexico_-_Template_Base-2026.pptx` y usa sus fondos,
 logo, tipografías (Arial Black / Arial) y colores. Las diapositivas de muestra del template no se
-incluyen. Contenido (36 diapositivas):
+incluyen. También se guarda en PDF (`Grupo_Velcen_Estatus_nov2026.pdf`) para abrirla directo.
 
-1. Portada, resumen ejecutivo (total del grupo y dos semáforos por agencia), matriz de 11
-   indicadores, dónde se concentra lo pendiente y escenario de mobiliario.
-2. Por agencia: sección con fachada, qué falta por indicador, proyecto por área (gráfica de barras
-   nativa y tabla), pendientes por área con explicación, mobiliario, Cummins (Apodaca), personal y
-   evidencia.
-3. Puntos a validar, plan de trabajo por agencia (Responsable, Fecha compromiso, Estatus y
-   Comentarios en blanco para llenar en la visita) y siguientes pasos.
+Versión ejecutiva (25 diapositivas):
 
-Lo que cumple se muestra en una línea; el detalle es para lo pendiente. Cálculos y fuentes van en las
-notas del orador. Gráficas y tablas son editables en PowerPoint.
+| # | Contenido |
+|---|---|
+| 1–4 | Portada, resumen ejecutivo (total del grupo y dos semáforos por agencia), matriz de 11 indicadores y escenario de mobiliario. |
+| 5–10 | Apodaca: sección con fachada, qué falta por indicador, proyecto por área (gráfica y tabla) y pendientes por área con explicación (3). |
+| 11–15 | Escobedo: lo mismo (pendientes en 2). |
+| 16–19 | Allende: lo mismo, con el mensaje «Es necesario definir el proyecto para la agencia». |
+| 20 | Evidencia (fotos) y puntos a validar en la visita. |
+| 21–24 | Plan de trabajo por agencia: pendiente, qué falta, prioridad, y Responsable, Fecha compromiso, Estatus y Comentarios en blanco para llenar en la visita. |
+| 25 | Siguientes pasos. |
+
+Lo que cumple se muestra en una línea; el detalle es para lo pendiente. El detalle de vacantes y de
+requisitos Cummins va en las tarjetas por indicador y en el plan. Cálculos y fuentes van en las notas
+del orador. Gráficas y tablas son editables en PowerPoint.
+
+Versión extendida (36 diapositivas, agrega por agencia mobiliario, Cummins, personal y evidencia):
+
+```bash
+python3 presentacion/generar_presentacion.py --completa
+```
+
+Para el PDF:
+
+```bash
+cd presentacion && soffice --headless --convert-to pdf Grupo_Velcen_Estatus_nov2026.pptx
+```
 
 ## Herramienta actual (`salida/Grupo_Velcen.html`)
 

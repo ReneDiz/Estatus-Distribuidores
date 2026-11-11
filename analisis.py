@@ -156,7 +156,8 @@ def analizar(d, cfg, exp):
                 e["necesita"] = "Mayor rezago: " + ", ".join(f"{a['nombre']} {fmt(a['valor'], 0)}" for a in peor) + "."
             elif i["id"] == "personal":
                 e["falta"] = f"{personal['cub']:g} de {personal['req']:g} plazas cubiertas."
-                e["necesita"] = f"Contratar {personal['faltan']:g} vacantes en {len(personal['vacantes'])} puestos."
+                e["necesita"] = (f"Contratar {personal['faltan']:g} vacantes en {len(personal['vacantes'])} puestos. Principales: "
+                                 + ", ".join(f"{v['puesto']} {v['faltan']:g}" for v in personal["vacantes"][:3]) + ".")
             elif i["id"] == "cummins":
                 for c in i["conceptos"]:
                     if c["avance"] < 1:
