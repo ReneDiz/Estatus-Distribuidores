@@ -589,7 +589,7 @@ def indicadores(dk, d):
     y0 = Y_CONT + 0.57
 
     def alto_tarjeta(e):
-        chars = len(e["falta"]) + len(e["necesita"]) + 30
+        chars = len(e["falta"]) + len(e["necesita"]) + (110 if e["id"] == "personal" else 30)
         return 0.75 + 0.19 * (-(-chars // int((w - 0.4) * 15.5)) + (1 if e["necesita"] else 0))
 
     mensaje = d.get("mensaje_clave")
@@ -608,9 +608,12 @@ def indicadores(dk, d):
             texto(s, x + 0.5, y + 0.14, w - 1.9, 0.32, nombre, size=12, bold=True)
             texto(s, x + w - 1.4, y + 0.1, 1.25, 0.4, pc(e["valor"]), size=18, bold=True, align="r", color=SEM[e["estado"]])
             pars = [{"runs": [("Qué falta: ", {"bold": True, "color": CIAN}), (e["falta"], {})], "size": 10, "espacio": 4}]
-            if e["necesita"]:
+            necesita = e["necesita"]
+            if e["id"] == "personal" and d["personal"]:  # sólo en la presentación: puestos con más vacantes
+                necesita += " Principales: " + ", ".join(f"{v['puesto']} {v['faltan']:g}" for v in d["personal"]["vacantes"][:3]) + "."
+            if necesita:
                 lab = "Detalle: " if e["id"] in ("proyecto", "cummins") else "Qué se necesita: "
-                pars.append({"runs": [(lab, {"bold": True, "color": CIAN}), (e["necesita"], {})], "size": 10})
+                pars.append({"runs": [(lab, {"bold": True, "color": CIAN}), (necesita, {})], "size": 10})
             texto(s, x + 0.2, y + 0.55, w - 0.4, h - 0.65, pars, color=GRIS_CL)
         y += h + gap
     if mensaje:
