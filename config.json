@@ -1,38 +1,130 @@
 {
   "_ayuda": "Configuración del reporte de estatus de distribuidores. Los rangos del semáforo se ajustan aquí sin tocar el código. Porcentajes de 0 a 100.",
-
-  "fecha_corte": "2026-11-09",
+  "fecha_corte": "2026-10-30",
   "meses_foto_reciente": 6,
   "carpeta_salida": "salida",
   "ancho_max_foto_px": 800,
   "calidad_jpeg": 65,
-
   "archivos": {
-    "kpis": "datos/KPIS.xlsx",
+    "kpis": "datos/KPIs_actualizado_nov2026.xlsx",
     "personal_sistema": "datos/Sistema_Personal_FOTON_v19_Regionales-Noviembre.xlsx",
     "fotos": "datos/fotos/fotos.json",
     "ajustes": "datos/ajustes.json"
   },
-
   "semaforo": {
     "_ayuda": "verde_min: desde este % es verde. amarillo_min: desde este % es amarillo (null = sin amarillo). Debajo de amarillo_min es rojo.",
-    "si_no":    { "verde_min": 100, "amarillo_min": null },
-    "proyecto": { "verde_min": 80,  "amarillo_min": 50 },
-    "cummins":  { "verde_min": 100, "amarillo_min": 50 },
-    "personal": { "verde_min": 80,  "amarillo_min": 50 },
-    "general":  { "verde_min": 80,  "amarillo_min": 50 }
+    "si_no": {
+      "verde_min": 100,
+      "amarillo_min": null
+    },
+    "proyecto": {
+      "verde_min": 80,
+      "amarillo_min": 50
+    },
+    "cummins": {
+      "verde_min": 100,
+      "amarillo_min": 50
+    },
+    "personal": {
+      "verde_min": 80,
+      "amarillo_min": 50
+    },
+    "general": {
+      "verde_min": 80,
+      "amarillo_min": 50
+    }
   },
-
   "indicadores": [
-    { "id": "anexos",      "nombre": "Anexos Operativos",           "fuente": "kpi", "hoja": "Anexos operativos 2026", "semaforo": "si_no",    "con_conceptos": false },
-    { "id": "proyecto",    "nombre": "% Desarrollo de Proyecto",    "fuente": "kpi", "hoja": "% DE DESARRO PROYEC",     "semaforo": "proyecto", "con_conceptos": true },
-    { "id": "software",    "nombre": "Software Operativo",          "fuente": "kpi", "hoja": "Cum sofware oper",        "semaforo": "si_no",    "con_conceptos": true },
-    { "id": "stock",       "nombre": "Stock de Refacciones",        "fuente": "kpi", "hoja": "Stock de refacciones",    "semaforo": "si_no",    "con_conceptos": false },
-    { "id": "diagnostico", "nombre": "Equipo de Diagnóstico",       "fuente": "kpi", "hoja": "Equipo de diagnostico",   "semaforo": "si_no",    "con_conceptos": false },
-    { "id": "cummins",     "nombre": "Cummins",                     "fuente": "kpi", "hoja": "Cummins",                 "semaforo": "cummins",  "con_conceptos": true },
-    { "id": "personal",    "nombre": "Personal",                    "fuente": "personal",                               "semaforo": "personal", "con_conceptos": true }
+    {
+      "id": "proyecto",
+      "nombre": "% Desarrollo de Proyecto",
+      "fuente": "kpi",
+      "hoja": "% DE DESARRO PROYEC",
+      "semaforo": "proyecto",
+      "con_conceptos": true
+    },
+    {
+      "id": "crm",
+      "nombre": "CRM",
+      "fuente": "kpi",
+      "hoja": "Cum sofware oper",
+      "concepto": "CRM",
+      "semaforo": "si_no",
+      "con_conceptos": false
+    },
+    {
+      "id": "rifof",
+      "nombre": "RIFOF",
+      "fuente": "kpi",
+      "hoja": "RIFOF",
+      "semaforo": "si_no",
+      "con_conceptos": false
+    },
+    {
+      "id": "cummins",
+      "nombre": "Cummins",
+      "fuente": "kpi",
+      "hoja": "Cummins",
+      "semaforo": "cummins",
+      "con_conceptos": true
+    },
+    {
+      "id": "diagnostico",
+      "nombre": "Equipo de Diagnóstico",
+      "fuente": "kpi",
+      "hoja": "Equipo de diagnostico",
+      "semaforo": "si_no",
+      "con_conceptos": false
+    },
+    {
+      "id": "fotonet",
+      "nombre": "Fotonet",
+      "fuente": "kpi",
+      "hoja": "Cum sofware oper",
+      "concepto": "FOTON NET",
+      "semaforo": "si_no",
+      "con_conceptos": false
+    },
+    {
+      "id": "planpiso",
+      "nombre": "Plan Piso",
+      "fuente": "kpi",
+      "hoja": "Capacidad financiera",
+      "semaforo": "si_no",
+      "con_conceptos": false
+    },
+    {
+      "id": "kit",
+      "nombre": "Kit de Refacciones",
+      "fuente": "kpi",
+      "hoja": "Stock de refacciones",
+      "semaforo": "si_no",
+      "con_conceptos": false
+    },
+    {
+      "id": "pld",
+      "nombre": "PLD",
+      "fuente": "kpi",
+      "hoja": "PLD",
+      "semaforo": "si_no",
+      "con_conceptos": false
+    },
+    {
+      "id": "anexos",
+      "nombre": "Anexos Operativos",
+      "fuente": "kpi",
+      "hoja": "Anexos operativos 2026",
+      "semaforo": "si_no",
+      "con_conceptos": false
+    },
+    {
+      "id": "personal",
+      "nombre": "Personal",
+      "fuente": "personal",
+      "semaforo": "personal",
+      "con_conceptos": true
+    }
   ],
-
   "grupos": [
     {
       "id": "velcen",
@@ -58,7 +150,13 @@
           "nombre": "FOTON Allende",
           "nombre_kpi": "FOTON_Allende",
           "nombre_personal": "Foton Allende",
-          "no_aplica": ["software", "stock", "diagnostico", "cummins"],
+          "no_aplica": [
+            "crm",
+            "fotonet",
+            "kit",
+            "diagnostico",
+            "cummins"
+          ],
           "motivo_no_aplica": "Showroom: se rige por las agencias Apodaca y Escobedo"
         }
       ]

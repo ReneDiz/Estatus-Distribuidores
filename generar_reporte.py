@@ -118,10 +118,11 @@ class LectorKPI:
         self.cache[hoja] = (out, idx)
         return self.cache[hoja]
 
-    def indicador(self, hoja, nombre_kpi, corte):
+    def indicador(self, hoja, nombre_kpi, corte, concepto=None):
         filas, idx = self.filas(hoja)
         propias = [r for r in filas if norm(r["nombre"]) == norm(nombre_kpi)
-                   and isinstance(r["fecha"], dt.datetime) and r["fecha"].date() <= corte]
+                   and isinstance(r["fecha"], dt.datetime) and r["fecha"].date() <= corte
+                   and (concepto is None or norm(r["concepto"]) == norm(concepto))]
         if not propias:
             return None
         mes = max(r["fecha"] for r in propias)
@@ -318,7 +319,7 @@ def evaluar(cfg, grupo, kpi, per, fotos, corte, ajustes=()):
                 inds.append(r)
                 continue
             if ind["fuente"] == "kpi":
-                x = kpi.indicador(ind["hoja"], d["nombre_kpi"], corte)
+                x = kpi.indicador(ind["hoja"], d["nombre_kpi"], corte, ind.get("concepto"))
                 if x:
                     aplicar_ajustes(x, [a for a in ajustes if a["distribuidor"] == d["id"] and a["indicador"] == ind["id"]])
                     r.update(valor=x["valor"], mes=x["mes"], conceptos=x["conceptos"], fuente=x["ubicacion"],
@@ -408,7 +409,8 @@ def icono_subtema(sub):
     return "generales"
 
 
-ICONO_IND = {"anexos": "doc", "proyecto": "imagen", "software": "pc", "stock": "caja",
+ICONO_IND = {"anexos": "doc", "proyecto": "imagen", "software": "pc", "stock": "caja", "kit": "caja",
+             "crm": "pc", "fotonet": "pc", "rifof": "doc", "planpiso": "doc", "pld": "doc",
              "diagnostico": "diag", "cummins": "motor", "personal": "persona"}
 
 
@@ -603,7 +605,8 @@ def render_observaciones(d):
 def render_distribuidor(d, grupo, corte):
     tarjetas = "".join(render_tarjeta(i, corte) for i in d["indicadores"])
     by = {i["id"]: i for i in d["indicadores"]}
-    simples = "".join(render_simple(by[k]) for k in ("anexos", "stock", "diagnostico") if k in by)
+    simples = "".join(render_simple(by[k]) for k in ("anexos", "crm", "fotonet", "rifof", "planpiso", "kit", "pld",
+                                                     "diagnostico", "stock") if k in by)
     nota_gen = (f'Promedio simple de {d["n_validos"]} indicadores'
                 + (f' (sin información: {", ".join(d["sin_info"])})' if d["sin_info"] else "")
                 + (f'; no aplica: {", ".join(by[k]["nombre"] for k in d.get("no_aplica", []))} — {d.get("motivo_no_aplica", "")}'
@@ -643,7 +646,20 @@ def render_portada(grupo, dists, cfg, corte):
         filas.append(f'<tr><th scope="row">{icono(ICONO_IND[ind["id"]], "ico sm")} {esc(ind["nombre"])}</th>{"".join(celdas)}</tr>')
     gen = "".join(f'<td class="cell gen {d["estado_general"]}"><span class="pi">{ESTADO_ICO[d["estado_general"]]}</span>{pct(d["general"])}</td>' for d in dists)
     pend = "".join(f'<td class="num"><b>{len(d["pendientes"])}</b></td>' for d in dists)
-    tarjetas = "".join(f"""
+    # Total del grupo: promedio de todos los indicadores que aplican en todas las agencias
+    vals = [i["valor"] for d in dists for i in d["indicadores"] if i["estado"] != "na" and i["valor"] is not None]
+    grupo_gen = sum(vals) / len(vals) if vals else None
+    proy = [c["avance"] for d in dists for i in d["indicadores"] if i["id"] == "proyecto" for c in i["conceptos"]]
+    grupo_proy = 100 * sum(proy) / len(proy) if proy else None
+    eg, ep = semaforo(grupo_gen, cfg["semaforo"]["general"]), semaforo(grupo_proy, cfg["semaforo"]["proyecto"])
+    total = f"""
+      <div class="dcard {eg}">
+        <h3>Total del grupo</h3>
+        <div class="big">{pct(grupo_gen)}</div>{meter(grupo_gen, eg)}
+        <div class="cardrow">{pill(eg)}<span><b>{sum(len(d["pendientes"]) for d in dists)}</b> pendientes</span></div>
+        <p class="note">{len(vals)} indicadores de las {len(dists)} agencias (sin los que no aplican). Desarrollo de Proyecto del grupo: <b>{pct(grupo_proy)}</b> ({len(proy)} elementos) {pill(ep)}</p>
+      </div>"""
+    tarjetas = total + "".join(f"""
       <a class="dcard {d["estado_general"]}" href="#d-{d["id"]}">
         <h3>{esc(d["nombre"])}</h3>
         <div class="big">{pct(d["general"])}</div>{meter(d["general"], d["estado_general"])}
