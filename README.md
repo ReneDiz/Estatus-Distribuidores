@@ -150,23 +150,28 @@ Si aparece un concepto nuevo sin explicación, los generadores avisan en consola
 logo, tipografías (Arial Black / Arial) y colores. Las diapositivas de muestra del template no se
 incluyen. También se guarda en PDF (`Grupo_Velcen_Estatus_nov2026.pdf`) para abrirla directo.
 
-Versión ejecutiva (25 diapositivas):
+Versión ejecutiva (28 diapositivas):
 
 | # | Contenido |
 |---|---|
 | 1–4 | Portada, resumen ejecutivo (total del grupo y dos semáforos por agencia), matriz de 11 indicadores y escenario de mobiliario. |
-| 5–10 | Apodaca: sección con fachada, qué falta por indicador, proyecto por área (gráfica y tabla) y pendientes por área con explicación (3). |
-| 11–15 | Escobedo: lo mismo (pendientes en 2). |
-| 16–19 | Allende: lo mismo, con el mensaje «Es necesario definir el proyecto para la agencia». |
-| 20 | Evidencia (fotos) y puntos a validar en la visita. |
-| 21–24 | Plan de trabajo por agencia: pendiente, qué falta, prioridad, y Responsable, Fecha compromiso, Estatus y Comentarios en blanco para llenar en la visita. |
-| 25 | Siguientes pasos. |
+| 5–11 | Apodaca: presentación de la agencia (calificación, foto de fachada y los 11 indicadores en tarjetas), proyecto por área (gráfica y tabla), pendientes por área con explicación (4) y personal. |
+| 12–17 | Escobedo: lo mismo (pendientes en 3). |
+| 18–22 | Allende: lo mismo (pendientes en 2), con «Es necesario definir el proyecto para la agencia». |
+| 23 | Evidencia (fotos) y puntos a validar en la visita. |
+| 24–27 | Plan de trabajo por agencia: pendiente, qué falta, prioridad, y Responsable, Fecha compromiso, Estatus y Comentarios en blanco para llenar en la visita. |
+| 28 | Siguientes pasos. |
 
-Lo que cumple se muestra en una línea; el detalle es para lo pendiente. El detalle de vacantes y de
-requisitos Cummins va en las tarjetas por indicador y en el plan. Cálculos y fuentes van en las notas
-del orador. Gráficas y tablas son editables en PowerPoint.
+- **Pendientes:** cada área es un bloque a todo el ancho con su avance, conteo y barra; cada pendiente
+  lleva su nombre y una explicación corta. Las alturas se calculan con la medida real de la letra para
+  que nada se encime; un área chica sube a llenar el espacio libre de otra lámina.
+- **Personal:** el área con menor cobertura como título, barras por área, vacantes por puesto, total
+  de vacantes de esa área y personas extra (por arriba de lo requerido) que podrían cubrir vacantes.
 
-Versión extendida (36 diapositivas, agrega por agencia mobiliario, Cummins, personal y evidencia):
+Lo que cumple se muestra en una línea o en su tarjeta; el detalle es para lo pendiente. Cálculos y
+fuentes van en las notas del orador. Gráficas y tablas son editables en PowerPoint.
+
+Versión extendida (39 diapositivas, agrega por agencia qué falta por indicador, mobiliario, Cummins y evidencia):
 
 ```bash
 python3 presentacion/generar_presentacion.py --completa

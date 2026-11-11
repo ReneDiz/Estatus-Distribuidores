@@ -14,6 +14,7 @@ incluyen en el resultado.
 import argparse
 import io
 import os
+import re
 import sys
 import zipfile
 
@@ -693,93 +694,289 @@ def proyecto_grafica(dk, d):
     pie(s, "Verde ≥ 80%, amarillo 50–79%, rojo < 50%. Un elemento parcial cuenta su avance (por ejemplo, 1 de 2 = 50%).")
 
 
-def _alto_item(p, w):
-    chars = len(p["titulo"]) + len(p["texto"] or "") + len(p["avance_txt"]) + 6
-    por_linea = int(w * 19)
-    return 0.075 + 0.14 * max(1, -(-chars // por_linea))
+# ---- medición de texto (Liberation Sans tiene las mismas medidas que Arial)
+_FUENTES = {}
+_DIR_FUENTES = "/usr/share/fonts/truetype/liberation"
 
 
-def _alto_area(a, w, cols=1):
-    if cols == 1:
-        return 0.62 + sum(_alto_item(p, w - 0.3) for p in a["pendientes"])
-    mitad = (len(a["pendientes"]) + 1) // 2
-    ww = (w - 0.45) / 2
-    return 0.62 + max(sum(_alto_item(p, ww) for p in a["pendientes"][:mitad]),
-                      sum(_alto_item(p, ww) for p in a["pendientes"][mitad:]))
+def _fuente(bold):
+    if bold not in _FUENTES:
+        from PIL import ImageFont
+        nombre = "LiberationSans-Bold.ttf" if bold else "LiberationSans-Regular.ttf"
+        try:
+            _FUENTES[bold] = ImageFont.truetype(os.path.join(_DIR_FUENTES, nombre), 100)
+        except OSError:
+            _FUENTES[bold] = None
+    return _FUENTES[bold]
 
 
-def bloque_area(s, a, x, y, w, h, cols=1):
+def lineas(txt, pt, ancho_in, bold=False):
+    """Número de renglones que ocupa un texto en una caja de ancho dado (aprox. con la fuente real)."""
+    if not txt:
+        return 0
+    f = _fuente(bold)
+    if f is None:
+        return max(1, -(-len(txt) // int(ancho_in * 1300 / pt)))
+    escala = pt / 100.0
+    limite = ancho_in * 72 / escala
+    n, actual = 1, ""
+    for palabra in txt.split():
+        prueba = (actual + " " + palabra).strip()
+        if f.getlength(prueba) <= limite or not actual:
+            actual = prueba
+        else:
+            n, actual = n + 1, palabra
+    return n
+
+
+INTERLINEA = 1.17
+T_ITEM, T_EXP = 10.5, 9.5          # tamaños de título y explicación de cada pendiente
+SEP_ITEM = 0.13                    # espacio entre pendientes (in)
+CAB_AREA = 0.76                    # cabecera del bloque: nombre, conteo y barra
+
+
+def _titulo_item(p):
+    return p["titulo"] + (f"  ·  {p['avance_txt']}" if p["parcial"] else "")
+
+
+def _alto_item(p, w, k=1.0):
+    ti, te = T_ITEM * k, T_EXP * k
+    h = lineas(_titulo_item(p), ti, w, True) * ti * INTERLINEA / 72
+    h += lineas(p["texto"] or "", te, w) * te * INTERLINEA / 72
+    return h + SEP_ITEM * k
+
+
+def _columnas(items, n):
+    por = -(-len(items) // n)
+    return [items[i * por:(i + 1) * por] for i in range(n)]
+
+
+def _alto_area(a, w, cols=1, k=1.0):
+    ww = (w - 0.4 - 0.3 * (cols - 1)) / cols
+    return CAB_AREA + 0.12 + max(sum(_alto_item(p, ww, k) for p in c) for c in _columnas(a["pendientes"], cols))
+
+
+def bloque_area(s, a, x, y, w, h, cols=1, k=1.0):
     caja(s, x, y, w, h, TARJETA, nombre=f"Área {a['nombre']}")
-    punto(s, x + 0.15, y + 0.15, 0.18, a["estado"])
-    texto(s, x + 0.42, y + 0.1, w - 1.4, 0.28, a["nombre"], size=12, bold=True)
-    texto(s, x + w - 1.0, y + 0.08, 0.85, 0.3, pc(a["valor"]), size=14, bold=True, align="r", color=SEM[a["estado"]])
-    texto(s, x + 0.42, y + 0.36, w - 0.6, 0.2, f"{a['n']} elementos · cumple {a['cumple']} · faltan {a['faltan']}",
-          size=8.5, color=GRIS)
-    items = a["pendientes"]
-    grupos = [items] if cols == 1 else [items[: (len(items) + 1) // 2], items[(len(items) + 1) // 2:]]
-    ww = (w - 0.3) if cols == 1 else (w - 0.45) / 2
-    for c, grupo in enumerate(grupos):
+    punto(s, x + 0.2, y + 0.2, 0.17, a["estado"])
+    texto(s, x + 0.47, y + 0.13, w - 1.6, 0.3, a["nombre"], size=13, bold=True)
+    texto(s, x + w - 1.25, y + 0.11, 1.05, 0.32, pc(a["valor"]), size=15, bold=True, align="r", color=SEM[a["estado"]])
+    texto(s, x + 0.47, y + 0.41, w - 0.7, 0.2, f"{a['n']} elementos  ·  cumple {a['cumple']}  ·  faltan {a['faltan']}",
+          size=9, color=GRIS)
+    barra(s, x + 0.2, y + 0.66, w - 0.4, 0.05, a["valor"], a["estado"])
+    ww = (w - 0.4 - 0.3 * (cols - 1)) / cols
+    for c, grupo in enumerate(_columnas(a["pendientes"], cols)):
         pars = []
         for p in grupo:
             runs = [(p["titulo"], {"bold": True, "color": BLANCO})]
             if p["parcial"]:
-                runs.append((f" ({p['avance_txt']})", {"color": SEM["amarillo"], "bold": True}))
+                runs.append((f"  ·  {p['avance_txt']}", {"bold": True, "color": SEM["amarillo"]}))
+            pars.append({"runs": runs, "size": T_ITEM * k, "espacio": 1 if p["texto"] else SEP_ITEM * 72 * k})
             if p["texto"]:
-                runs.append(("  " + p["texto"], {"color": GRIS_CL}))
-            pars.append({"runs": runs, "size": 9.5 if cols == 2 else 8.5, "espacio": 6 if cols == 2 else 3.5})
-        texto(s, x + 0.15 + c * (ww + 0.15), y + 0.62, ww, h - 0.7, pars)
+                pars.append({"runs": [(p["texto"], {})], "size": T_EXP * k, "color": GRIS_CL, "espacio": SEP_ITEM * 72 * k})
+        texto(s, x + 0.2 + c * (ww + 0.3), y + CAB_AREA + 0.1, ww, h - CAB_AREA - 0.15, pars)
 
 
 def areas_detalle(dk, d):
-    """Cada área con pendientes es su propio bloque; se acomodan en dos columnas por diapositiva."""
+    """Cada área con pendientes es su propio bloque a todo el ancho, con sus pendientes en 1 a 3 columnas.
+    Los bloques se apilan en la lámina mientras quepan (alturas medidas con la fuente real); un área chica
+    puede subir a llenar el espacio que deja una grande."""
     areas = [a for a in d["areas"] if a["faltan"] and g.norm(a["original"]) != "mobiliario"]
     disponible = Y_FIN - Y_CONT
-    w = (ANCHO - 0.15) / 2
-    pags, col, cols, usado = [], [], [], 0
+    gap = 0.16
+    bloques = []
     for a in areas:
-        h1 = _alto_area(a, w)
-        if h1 > disponible:  # área grande: diapositiva propia, ancho completo y dos columnas de pendientes
-            if col:
-                cols.append(col)
-            if cols:
-                pags.append(cols)
-            pags.append([[("full", a)]])
-            col, cols, usado = [], [], 0
-            continue
-        if usado + h1 > disponible and col:
-            cols.append(col)
-            col, usado = [], 0
-            if len(cols) == 2:
-                pags.append(cols)
-                cols = []
-        col.append(("half", a, h1))
-        usado += h1 + 0.12
-    if col:
-        cols.append(col)
-    if cols:
-        pags.append(cols)
-    # una sola columna con varias áreas: repartir en dos columnas
-    for cols in pags:
-        if len(cols) == 1 and cols[0][0][0] == "half" and len(cols[0]) >= 2:
-            c = cols[0]
-            cols[:] = [c[: (len(c) + 1) // 2], c[(len(c) + 1) // 2:]]
-    for k, cols in enumerate(pags):
-        nombres = [it[1]["nombre"] for c in cols for it in c]
-        s = dk.nueva(notas="Pendientes por área: qué falta y qué implica. Entre paréntesis, el avance de los elementos parciales.")
+        opciones = [c for c in (1, 2, 3) if c <= a["faltan"]]
+        c = min(opciones, key=lambda c: (round(_alto_area(a, ANCHO, c), 2), -c))
+        k = next((k for k in (1.0, 0.95, 0.9, 0.85) if _alto_area(a, ANCHO, c, k) <= disponible), 0.85)
+        bloques.append([a, c, min(disponible, _alto_area(a, ANCHO, c, k)), k])
+    # 1) áreas grandes (3+ pendientes) en su orden; 2) áreas chicas en el primer hueco donde quepan
+    pags, usos = [], []
+    for bl in [b for b in bloques if b[0]["faltan"] > 2]:
+        if pags and usos[-1] + gap + bl[2] <= disponible:
+            pags[-1].append(bl)
+            usos[-1] += gap + bl[2]
+        else:
+            pags.append([bl])
+            usos.append(bl[2])
+    for bl in [b for b in bloques if b[0]["faltan"] <= 2]:
+        k = next((i for i, u in enumerate(usos) if u + gap + bl[2] <= disponible), None)
+        if k is None:
+            pags.append([bl])
+            usos.append(bl[2])
+        else:
+            pags[k].append(bl)
+            usos[k] += gap + bl[2]
+    orden = {id(b[0]): i for i, b in enumerate(bloques)}
+    for pag in pags:
+        pag.sort(key=lambda b: orden[id(b[0])])
+    pags.sort(key=lambda pag: orden[id(pag[0][0])])
+    for k, pag in enumerate(pags):
+        s = dk.nueva(notas="Pendientes por área: qué falta y qué implica. Los elementos parciales muestran su avance.")
         titulo(s, f"{d['corto']}: pendientes de proyecto" + (f" ({k + 1}/{len(pags)})" if len(pags) > 1 else ""),
-               " · ".join(nombres))
-        for j, c in enumerate(cols):
-            y = Y_CONT
-            for it in c:
-                if it[0] == "full":
-                    bloque_area(s, it[1], X0, y, ANCHO, disponible, cols=2)
-                else:
-                    x = X0 + j * (w + 0.15)
-                    h = it[2]
-                    if len(c) == 1:
-                        h = max(h, min(disponible, h))
-                    bloque_area(s, it[1], x, y, w, h)
-                    y += h + 0.12
+               "  ·  ".join(bl[0]["nombre"] for bl in pag))
+        y = Y_CONT
+        for a, c, h, k in pag:
+            bloque_area(s, a, X0, y, ANCHO, h, cols=c, k=k)
+            y += h + gap
+
+
+# ---- presentación de la agencia (estilo «agencia evaluada»)
+CORTO_IND = {"proyecto": "Proyecto", "crm": "CRM", "rifof": "RIFOF", "cummins": "Cummins", "diagnostico": "Diagnóstico",
+             "fotonet": "Fotonet", "planpiso": "Plan Piso", "kit": "Kit Refacc.", "pld": "PLD", "anexos": "Anexos",
+             "personal": "Personal"}
+
+
+def _minus(t):
+    """Primera letra en minúscula, salvo siglas (CRM, PLD...)."""
+    return t if len(t) > 1 and t[1].isupper() else t[:1].lower() + t[1:]
+
+
+def agencia(dk, d, k, total, ruta_foto, nota_foto=None):
+    s = dk.nueva(notas=f"{d['nombre']}: general {pc(d['general'], 2)}, proyecto {pc(d['proyecto']['valor'], 2)}, "
+                       f"{d['n_pendientes']} pendientes. Abajo, los 11 indicadores con su semáforo.")
+    texto(s, X0, 0.95, 4.8, 0.25, f"AGENCIA {k} DE {total}", size=10, bold=True, color=CIAN)
+    texto(s, X0, 1.2, 4.9, 0.6, d["nombre"], size=30, bold=True, font="Arial Black", color="FFFFFF")
+    est = d["estado_general"]
+    texto(s, X0, 1.85, 2.9, 0.85, pc(d["general"]), size=46, bold=True, font="Arial Black", color=SEM[est], anchor="m")
+    texto(s, X0 + 2.95, 1.98, 1.9, 0.6, [{"runs": [(SEM_TXT[est], {"bold": True, "color": SEM[est]})], "size": 13, "espacio": 2},
+                                        {"runs": [(f"{d['n_pendientes']} pendientes", {})], "size": 12, "color": GRIS_CL}])
+    texto(s, X0, 2.72, 4.9, 0.25, "Calificación general  ·  11 indicadores con el mismo peso" if not d.get("no_aplica")
+          else f"Calificación general  ·  {d['n_validos']} indicadores aplicables", size=9, color=GRIS)
+    pr = d["proyecto"]
+    lineas_txt = [{"runs": [("Proyecto ", {"color": GRIS_CL}), (pc(pr["valor"]), {"bold": True, "color": SEM[pr["estado"]]}),
+                            (f"  ·  {SEM_TXT[pr['estado']].lower()}  ·  faltan {pr['faltan']} de {pr['n']} elementos", {"color": GRIS_CL})],
+                   "size": 11, "espacio": 4}]
+    fuera = [e for e in d["resumen"] if e["falta"] and e["id"] not in ("proyecto", "personal")]
+    if fuera:
+        lineas_txt.append({"runs": [("Fuera de proyecto: ", {"bold": True, "color": CIAN})] +
+                                   [(f"{e['nombre']} {pc(e['valor'], 0 if e['valor'] in (0, 100) else 1)}: {_minus(e['falta'].rstrip('.'))}"
+                                     + ("  ·  " if i < len(fuera) - 1 else "."), {}) for i, e in enumerate(fuera)],
+                            "size": 10, "color": GRIS_CL})
+    if d.get("mensaje_clave"):
+        lineas_txt.append({"runs": [(d["mensaje_clave"], {"bold": True, "color": SEM["amarillo"]})], "size": 11})
+    texto(s, X0, 3.0, 4.9, 0.85, lineas_txt)
+    # foto de fachada
+    fx, fy, fw, fh = 5.45, 0.85, 4.15, 2.85
+    pic = dk.imagen(s, dk.foto(ruta_foto, fw, fh), fx, fy, fw, fh, "Fachada", f"Fachada {d['nombre']}")
+    pic.auto_shape_type = MSO_SHAPE.ROUNDED_RECTANGLE
+    geom = pic._element.spPr.find(qn("a:prstGeom"))
+    av = geom.find(qn("a:avLst"))
+    if av is None:
+        av = etree.SubElement(geom, qn("a:avLst"))
+    etree.SubElement(av, qn("a:gd"), name="adj", fmla="val 5000")
+    if nota_foto:
+        caja(s, fx + fw - 1.35, fy + 0.12, 1.22, 0.26, "000000", radio=0.05, alpha=0.6)
+        texto(s, fx + fw - 1.35, fy + 0.12, 1.22, 0.26, nota_foto, size=8, bold=True, color="FFFFFF", align="c", anchor="m")
+    # 11 indicadores
+    n = len(d["resumen"])
+    gap = 0.07
+    tw = (ANCHO - gap * (n - 1)) / n
+    ty, th = 4.05, 1.12
+    for i, e in enumerate(d["resumen"]):
+        x = X0 + i * (tw + gap)
+        estado = e["estado"]
+        caja(s, x, ty, tw, th, TARJETA, radio=0.05, nombre=f"Indicador {e['nombre']}")
+        caja(s, x, ty, tw, 0.045, SEM[estado] if estado != "na" else LINEA, radio=0)
+        texto(s, x + 0.07, ty + 0.13, tw - 0.1, 0.22, CORTO_IND.get(e["id"], e["nombre"]), size=8, color=GRIS_CL)
+        texto(s, x + 0.07, ty + 0.37, tw - 0.08, 0.36, "—" if estado == "na" else pc(e["valor"], 0 if e["valor"] in (0, 100) else 1),
+              size=13 if estado != "na" else 12, bold=True, color="FFFFFF" if estado != "na" else GRIS)
+        texto(s, x + 0.07, ty + 0.78, tw - 0.08, 0.22, SEM_TXT[estado], size=7.5, bold=True,
+              color=SEM[estado] if estado != "na" else GRIS)
+
+
+# ---- personal (estilo tarjetas + barras)
+def _extra_corto(nombre):
+    n = g.norm(nombre)
+    if n.startswith("caja"):
+        return "caja", None
+    if n.startswith("tecnico"):
+        m = re.search(r"tecnicos? '?([abc])'?", n)
+        return "técnicos", (m.group(1).upper() if m else "")
+    if "pick ups" in n:
+        return "asesores Pick Ups, Vanes y MT", None
+    if "tractocamiones" in n or "l&m" in n:
+        return "asesores L&MD y HDT", None
+    if n.startswith("asesor de servicio"):
+        return "asesor de servicio", None
+    return g.limpio(nombre).lower(), None
+
+
+def _extras_txt(puestos):
+    grupos, letras = {}, []
+    for p in puestos:
+        if p["extra"] > 0:
+            nom, letra = _extra_corto(p["puesto"])
+            grupos[nom] = grupos.get(nom, 0) + p["extra"]
+            if letra:
+                letras.append(letra)
+    partes = []
+    for nom, n in grupos.items():
+        if nom == "técnicos" and letras:
+            ls = sorted(set(letras))
+            nom = "técnico " + ls[0] if len(ls) == 1 else "técnicos " + ", ".join(ls[:-1]) + " y " + ls[-1]
+        partes.append(f"{nom[0].upper() + nom[1:] if not partes else nom} ({n:g})")
+    if not partes:
+        return ""
+    return (", ".join(partes[:-1]) + " y " + partes[-1]) if len(partes) > 1 else partes[0]
+
+
+AREA_PUESTO = {"comercial": "ventas", "administrativo": "administrativo", "postventa": "postventa"}
+
+
+def personal(dk, d):
+    pe = d["personal"]
+    if not pe or not pe["faltan"]:
+        return
+    ind = next(i for i in d["indicadores"] if i["id"] == "personal")
+    reglas = {"verde_min": 80, "amarillo_min": 50}
+    peor = min(pe["areas"], key=lambda a: (a["pct"] if a["pct"] is not None else 101))
+    etiqueta = AREA_PUESTO.get(g.norm(peor["area"]), g.norm(peor["area"]))
+    vac_area = sum(v["faltan"] for v in pe["vacantes"] if g.norm(v["area"]) == etiqueta)
+    s = dk.nueva(notas=f"Fuente: Sistema de Personal FOTON (noviembre). Requeridas {pe['req']:g}, cubiertas {pe['cub']:g}, "
+                       f"faltan {pe['faltan']:g}, extra {pe['extra']:g}. Las personas extra ocupan puestos por arriba de lo "
+                       f"requerido.")
+    texto(s, X0, 0.88, 6, 0.22, f"{d['nombre'].upper()}  ·  PERSONAL", size=9.5, bold=True, color=CIAN)
+    texto(s, X0, 1.1, 9.2, 0.45, f"{etiqueta.capitalize()}: {peor['cub']:g} de {peor['req']:g} plazas cubiertas",
+          size=22, bold=True, color="FFFFFF")
+    # barras por área
+    xi, wi = X0, 5.55
+    texto(s, xi, 1.68, wi, 0.28, [[("Personal  ·  ", {"bold": True}), (f"{pe['cub']:g} de {pe['req']:g} plazas ({pc(pe['valor'], 0)})", {"bold": True})]],
+          size=12, color="FFFFFF")
+    y = 2.02
+    for a in pe["areas"]:
+        est = g.semaforo(a["pct"], reglas)
+        es_peor = a is peor
+        texto(s, xi, y, 1.3, 0.22, a["area"], size=9.5, bold=es_peor, color="FFFFFF" if es_peor else GRIS_CL, anchor="m")
+        barra(s, xi + 1.35, y + 0.06, 3.45, 0.1, a["pct"], est)
+        texto(s, xi + 4.85, y, 0.7, 0.22, f"{a['cub']:g} / {a['req']:g}", size=9.5, bold=True, align="r", anchor="m")
+        y += 0.29
+    # vacantes por puesto en dos columnas
+    y += 0.08
+    texto(s, xi, y, wi, 0.22, f"Vacantes por puesto ({pe['faltan']:g} plazas)", size=9.5, bold=True, color=SEM["rojo"])
+    y += 0.3
+    vac = pe["vacantes"]
+    mitad = -(-len(vac) // 2)
+    cw = (wi - 0.12) / 2
+    alto = min(0.3, (Y_FIN - y) / max(mitad, 1) - 0.05)
+    for i, v in enumerate(vac):
+        x = xi + (i // mitad) * (cw + 0.12)
+        yy = y + (i % mitad) * (alto + 0.05)
+        caja(s, x, yy, cw, alto, TARJETA, radio=0.03)
+        texto(s, x + 0.1, yy, cw - 0.5, alto, v["puesto"], size=8.5, color=GRIS_CL, anchor="m")
+        texto(s, x + cw - 0.4, yy, 0.3, alto, f"{v['faltan']:g}", size=9, bold=True, align="r", anchor="m")
+    # tarjetas a la derecha
+    xd, wd = X0 + 5.85, 3.35
+    caja(s, xd, 1.7, wd, 1.65, "C0392B", radio=0.06, nombre="Vacantes del área más baja")
+    texto(s, xd + 0.25, 1.78, wd - 0.4, 0.95, f"{vac_area:g}", size=48, bold=True, font="Arial Black", color="FFFFFF", anchor="m")
+    texto(s, xd + 0.25, 2.8, wd - 0.4, 0.35, f"vacantes en {etiqueta}", size=13, color="FFFFFF")
+    extras = _extras_txt(ind.get("puestos") or [])
+    if pe["extra"]:
+        caja(s, xd, 3.5, wd, 1.2, TARJETA, radio=0.06, nombre="Personas extra")
+        texto(s, xd + 0.22, 3.6, wd - 0.4, 1.0, [
+            {"runs": [(f"{pe['extra']:g} personas extra", {"bold": True, "color": "FFFFFF"})], "size": 13, "espacio": 4},
+            {"runs": [((extras + ". " if extras else "") + "Revisar si alguna puede cubrir vacantes.", {})], "size": 9.5,
+             "color": GRIS_CL}])
 
 
 def mobiliario(dk, d):
@@ -816,51 +1013,6 @@ def mobiliario(dk, d):
           "Revisar en la visita qué muebles cumplen el estándar. Lo que no cumpla se cotiza y entra al plan." +
           (" Aplica sólo si se acepta el mobiliario de la oficina móvil." if d.get("mensaje_clave") else ""),
           size=8.5, color=GRIS_CL)
-
-
-def personal(dk, d):
-    pe = d["personal"]
-    if not pe or not pe["faltan"]:
-        return
-    s = dk.nueva(notas=f"Fuente: Sistema de Personal FOTON (noviembre). Requeridas {pe['req']:g}, cubiertas {pe['cub']:g}, "
-                       f"faltan {pe['faltan']:g}, extra {pe['extra']:g}. El % es cubiertas / requeridas.")
-    titulo(s, f"{d['corto']}: personal", f"{pe['cub']:g} de {pe['req']:g} plazas cubiertas ({pc(pe['valor'])}) · "
-                                         f"{pe['faltan']:g} vacantes")
-    areas = pe["areas"]
-    cd = CategoryChartData()
-    cd.categories = [a["area"] for a in areas]
-    cd.add_series("Requeridas", [a["req"] for a in areas])
-    cd.add_series("Cubiertas", [a["cub"] for a in areas])
-    gf = s.shapes.add_chart(XL_CHART_TYPE.COLUMN_CLUSTERED, Inches(X0), Inches(Y_CONT), Inches(4.3), Inches(3.7), cd)
-    gf.name = "Gráfica plazas por área"
-    ch = gf.chart
-    estilo_grafica(ch)
-    ch.has_legend = True
-    ch.legend.position = XL_LEGEND_POSITION.TOP
-    ch.legend.include_in_layout = False
-    ch.legend.font.color.rgb = rgb(GRIS_CL)
-    for ser, col in zip(ch.plots[0].series, ["5B6B85", AZUL]):
-        ser.format.fill.solid()
-        ser.format.fill.fore_color.rgb = rgb(col)
-    pl = ch.plots[0]
-    pl.gap_width = 70
-    pl.overlap = -10
-    pl.has_data_labels = True
-    pl.data_labels.position = XL_LABEL_POSITION.OUTSIDE_END
-    pl.data_labels.font.size = Pt(9)
-    pl.data_labels.font.bold = True
-    pl.data_labels.font.color.rgb = rgb(BLANCO)
-    ch.value_axis.visible = False
-    ch.value_axis.has_major_gridlines = False
-    ch.category_axis.format.line.color.rgb = rgb(LINEA)
-    ch.category_axis.tick_labels.font.color.rgb = rgb(BLANCO)
-    # vacantes por puesto
-    x = X0 + 4.55
-    filas = [["Puesto", "Área", "Vacantes"]]
-    for v in pe["vacantes"]:
-        filas.append([{"t": v["puesto"]}, {"t": v["area"], "color": GRIS_CL}, {"t": f"{v['faltan']:g}", "align": "c", "bold": True}])
-    alto = min(0.25, (Y_FIN - Y_CONT - 0.3) / len(filas))
-    tabla(s, x, Y_CONT, 4.65, filas, [2.65, 1.15, 0.85], alto_fila=alto, size=8.5 if len(filas) > 10 else 9)
 
 
 def cummins(dk, d):
@@ -936,12 +1088,13 @@ def validar(dk, ctx):
 
 
 def _alto_fila_plan(p):
-    lineas = max(-(-len(p["falta"]) // 85), -(-len(p["pendiente"]) // 20), 1)
-    return max(0.34, 0.115 * lineas + 0.13)
+    n = max(lineas(p["falta"], 7.5, 3.2), 1)
+    m = max(lineas(p["pendiente"], 8.5, 1.3, True), 1)
+    return max(0.24, n * 7.5 * 1.15 / 72, m * 8.5 * 1.15 / 72) + 0.07
 
 
 def plan(dk, d):
-    disponible = Y_FIN - Y_CONT - 0.32
+    disponible = 5.45 - Y_CONT - 0.32
     pags, act, usado = [], [], 0
     for p in d["plan"]:
         h = _alto_fila_plan(p)
@@ -1068,17 +1221,19 @@ def armar(salida, completa=False):
     if completa:
         concentracion(dk, ctx)
     escenario_mobiliario(dk, ctx)
-    for d in ctx["dists"]:
+    for k, d in enumerate(ctx["dists"], 1):
         ruta_fachada, nota = FACHADAS.get(d["id"], (None, None))
         if ruta_fachada and os.path.exists(os.path.join(RAIZ, ruta_fachada)):
-            seccion(dk, d, os.path.join(RAIZ, ruta_fachada), nota)
-        indicadores(dk, d)
+            agencia(dk, d, k, len(ctx["dists"]), os.path.join(RAIZ, ruta_fachada), nota)
+        if completa:
+            indicadores(dk, d)
         proyecto_grafica(dk, d)
         areas_detalle(dk, d)
         if completa:
             mobiliario(dk, d)
             cummins(dk, d)
-            personal(dk, d)
+        personal(dk, d)
+        if completa:
             evidencia(dk, d, _fotos(EVIDENCIAS.get(d["id"], []), ctx), ctx)
     if completa:
         validar(dk, ctx)
