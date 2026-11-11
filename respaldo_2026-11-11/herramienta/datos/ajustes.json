@@ -1,0 +1,54 @@
+{
+  "_ayuda": "Ajustes manuales confirmados en campo que todavía no están en el Excel KPI's. Cada ajuste reemplaza el 'Adquirido' de un concepto (o sólo su texto de pendiente con 'falta'). 'concepto' debe coincidir con la columna Concepto del Excel (no importan acentos ni mayúsculas). Cuando el Excel ya traiga el dato, borra el ajuste.",
+  "ajustes": [
+    {
+      "distribuidor": "apodaca",
+      "indicador": "anexos",
+      "concepto": "Firma de anexos 2026",
+      "adquirido": 1,
+      "fecha": "2026-11-10",
+      "nota": "Anexo de requerimientos anuales 2026 firmado, confirmado por el regional"
+    },
+    {
+      "distribuidor": "escobedo",
+      "indicador": "anexos",
+      "concepto": "Firma de anexos 2026",
+      "adquirido": 1,
+      "fecha": "2026-11-10",
+      "nota": "Anexo de requerimientos anuales 2026 firmado, confirmado por el regional"
+    },
+    {
+      "distribuidor": "allende",
+      "indicador": "anexos",
+      "concepto": "Firma de anexos 2026",
+      "adquirido": 1,
+      "fecha": "2026-11-10",
+      "nota": "Anexo de requerimientos anuales 2026 firmado, confirmado por el regional"
+    },
+    {
+      "distribuidor": "escobedo",
+      "indicador": "cummins",
+      "concepto": "Ceritificación Tecnicos o Gerente de Posventa o Gerente de Taller",
+      "adquirido": 1,
+      "fecha": "2026-11-10",
+      "nota": "El técnico ya está certificado; falta certificar al jefe de taller",
+      "falta": "Certificar al jefe de taller (1 de 2 acreditados)"
+    },
+    {
+      "distribuidor": "apodaca",
+      "indicador": "proyecto",
+      "concepto": "Letrero Servicio Total Care",
+      "adquirido": 1,
+      "fecha": "2026-11-10",
+      "nota": "El letrero Total Care ya está instalado, confirmado por el regional"
+    },
+    {
+      "distribuidor": "apodaca",
+      "indicador": "proyecto",
+      "concepto": "Kit inicial de Partes",
+      "adquirido": 1,
+      "fecha": "2026-11-10",
+      "nota": "Kit inicial de partes completo al 100%, confirmado por el regional"
+    }
+  ]
+}

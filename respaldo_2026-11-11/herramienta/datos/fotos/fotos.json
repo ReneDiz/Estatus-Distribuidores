@@ -1,0 +1,238 @@
+{
+ "_ayuda": "Fotos asignadas a conceptos. 'concepto' debe coincidir con el texto de la columna Concepto del Excel KPI's (no importan mayúsculas ni espacios). 'archivo' es relativo a datos/fotos/. La fecha se toma de EXIF, del nombre 'WhatsApp Image AAAA-MM-DD' o de 'fecha' si se indica.",
+ "fotos": [
+  {
+   "distribuidor": "apodaca",
+   "indicador": "proyecto",
+   "concepto": "Panel de ACM",
+   "archivo": "apodaca/WhatsApp Image 2026-07-02 at 6.14.54 PM (1).jpeg",
+   "drive_id": "1dOxLmV1Hu0Cy9pqKv3k9VdjG8Gk8jQ7h",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton_Apodaca) / Fotos Visitas / 20260715 Apodaca Avances",
+   "descripcion": "Fachada con panel ACM gris"
+  },
+  {
+   "distribuidor": "apodaca",
+   "indicador": "proyecto",
+   "concepto": "Logotipo",
+   "archivo": "apodaca/WhatsApp Image 2026-07-02 at 6.14.55 PM.jpeg",
+   "drive_id": "1TiStpdvHUbcTPbGJgWgr-VsYitgCrPDV",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton_Apodaca) / Fotos Visitas / 20260715 Apodaca Avances",
+   "descripcion": "Logotipo FOTON en fachada"
+  },
+  {
+   "distribuidor": "apodaca",
+   "indicador": "proyecto",
+   "concepto": "Totém",
+   "archivo": "apodaca/WhatsApp Image 2026-07-02 at 6.14.53 PM.jpeg",
+   "drive_id": "1eSEE6cpI9Z8c5qEdzkBsP6AC9ey0jGvl",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton_Apodaca) / Fotos Visitas / 20260715 Apodaca Avances",
+   "descripcion": "Acceso desde la calle: hay lona temporal, no tótem"
+  },
+  {
+   "distribuidor": "apodaca",
+   "indicador": "proyecto",
+   "concepto": "Area de Exhibición Cerrada",
+   "archivo": "apodaca/WhatsApp Image 2026-09-23 at 9.47.50 AM (1).jpeg",
+   "drive_id": "1EKUg-m-YF2UGh3_D5QLxGTFMWD6J-ep9",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton_Apodaca) / Fotos Visitas / 20260928 Apodaca",
+   "descripcion": "Exhibición cerrada en showroom"
+  },
+  {
+   "distribuidor": "apodaca",
+   "indicador": "proyecto",
+   "concepto": "Piso Tipo Marmól",
+   "archivo": "apodaca/WhatsApp Image 2026-09-23 at 9.48.16 AM 2.jpeg",
+   "drive_id": "1wpCOmHH1k3Jwbal18pAFShJLYAQeJnEO",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton_Apodaca) / Fotos Visitas / 20260928 Apodaca",
+   "descripcion": "Piso tipo mármol en showroom"
+  },
+  {
+   "distribuidor": "apodaca",
+   "indicador": "proyecto",
+   "concepto": "Área Administrativo de ventas y CRM",
+   "archivo": "apodaca/WhatsApp Image 2026-07-02 at 6.14.57 PM (2).jpeg",
+   "drive_id": "17173WGKFQkPEkIHwU7fwy93aaWDZbZLW",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton_Apodaca) / Fotos Visitas / 20260715 Apodaca Avances",
+   "descripcion": "Área administrativa con escritorios"
+  },
+  {
+   "distribuidor": "apodaca",
+   "indicador": "proyecto",
+   "concepto": "Piso con pintura epóxico Gris Oxford",
+   "archivo": "apodaca/WhatsApp Image 2026-07-02 at 6.14.58 PM (1).jpeg",
+   "drive_id": "1FkHszKbg97OjM9f5BdkUBx9aOY4ViF_d",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton_Apodaca) / Fotos Visitas / 20260715 Apodaca Avances",
+   "descripcion": "Taller: piso de concreto sin pintura epóxica"
+  },
+  {
+   "distribuidor": "apodaca",
+   "indicador": "proyecto",
+   "concepto": "Delimitación de bahías con lineas amarillo tránsito",
+   "archivo": "apodaca/WhatsApp Image 2026-07-02 at 6.14.58 PM (4).jpeg",
+   "drive_id": "11y6M0Nz9xwiqM4G1hcD72NRqprgaLCYU",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton_Apodaca) / Fotos Visitas / 20260715 Apodaca Avances",
+   "descripcion": "Bahías delimitadas con línea amarilla"
+  },
+  {
+   "distribuidor": "apodaca",
+   "indicador": "proyecto",
+   "concepto": "Área techada",
+   "archivo": "apodaca/WhatsApp Image 2026-07-02 at 6.14.58 PM (5).jpeg",
+   "drive_id": "1EEcsOey-nF4T-9qlqPopMpAtac4lEIYc",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton_Apodaca) / Fotos Visitas / 20260715 Apodaca Avances",
+   "descripcion": "Taller techado con bahías de VC"
+  },
+  {
+   "distribuidor": "escobedo",
+   "indicador": "proyecto",
+   "concepto": "Panel de ACM",
+   "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.50.58 AM (1).jpeg",
+   "drive_id": "1ttUBww8pP5P0ryP7VDSHtEQlnsnlLvoe",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
+   "descripcion": "Fachada con panel ACM"
+  },
+  {
+   "distribuidor": "escobedo",
+   "indicador": "proyecto",
+   "concepto": "Logotipo",
+   "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.50.58 AM.jpeg",
+   "drive_id": "1Gp8pCJj84usT_Js9Pq3z3oDRvjZwocMD",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
+   "descripcion": "Logotipo FOTON en fachada"
+  },
+  {
+   "distribuidor": "escobedo",
+   "indicador": "proyecto",
+   "concepto": "Letras de Servicio",
+   "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.50.59 AM.jpeg",
+   "drive_id": "1_WhTg9gM3CB8gfHXyGccgAUYX1TSs4Ji",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
+   "descripcion": "Letras «SERVICIO» en fachada"
+  },
+  {
+   "distribuidor": "escobedo",
+   "indicador": "proyecto",
+   "concepto": "Letrero Servicio Total Care",
+   "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.51.04 AM (1).jpeg",
+   "drive_id": "1VugN5AArZ-HBmzTN05Ruw-Zqu9KkJU4u",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
+   "descripcion": "Letrero Total Care en área de servicio"
+  },
+  {
+   "distribuidor": "escobedo",
+   "indicador": "proyecto",
+   "concepto": "Area de Exhibición Cerrada",
+   "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.51.00 AM (1).jpeg",
+   "drive_id": "1D8Dc3r5vXlSidbmC2ZzsIZyHzbPPQGcC",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
+   "descripcion": "Exhibición cerrada"
+  },
+  {
+   "distribuidor": "escobedo",
+   "indicador": "proyecto",
+   "concepto": "Piso Tipo Marmól",
+   "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.51.00 AM (2).jpeg",
+   "drive_id": "1N-ZCmKWzD983Vy0y1OP8jFeoxR1BGeXF",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
+   "descripcion": "Piso tipo mármol en showroom"
+  },
+  {
+   "distribuidor": "escobedo",
+   "indicador": "proyecto",
+   "concepto": "Area de Espera clientes",
+   "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.51.01 AM (2).jpeg",
+   "drive_id": "1hKcsjZc-Dm0k9IyJ6FeOmQopcMBtjkP4",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
+   "descripcion": "Área de espera de clientes"
+  },
+  {
+   "distribuidor": "escobedo",
+   "indicador": "proyecto",
+   "concepto": "Área para recepción",
+   "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.51.01 AM.jpeg",
+   "drive_id": "1Ygb1KMYLN_FUe2zx7t46OISBgSnaIzfR",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
+   "descripcion": "Recepción"
+  },
+  {
+   "distribuidor": "escobedo",
+   "indicador": "proyecto",
+   "concepto": "Área Administrativo de ventas y CRM",
+   "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.51.02 AM (1).jpeg",
+   "drive_id": "1-xhx2CHL9Yc6cbyGUcCxvOgg4o1BIU5f",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
+   "descripcion": "Área administrativa"
+  },
+  {
+   "distribuidor": "escobedo",
+   "indicador": "proyecto",
+   "concepto": "Bahías para atención de VC",
+   "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.51.05 AM.jpeg",
+   "drive_id": "1Rc90bhnUvHzSQx5OhyrfU4EyqzvwobIj",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
+   "descripcion": "Atención de tractocamiones (VC)"
+  },
+  {
+   "distribuidor": "escobedo",
+   "indicador": "proyecto",
+   "concepto": "Lugares reservados Estacionamiento clientes",
+   "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.51.07 AM.jpeg",
+   "drive_id": "1SgyCTUEP9tKDWHI3IsVvhkqZcKDI8khJ",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
+   "descripcion": "Acceso/estacionamiento sin cajones reservados para clientes"
+  },
+  {
+   "distribuidor": "allende",
+   "indicador": "proyecto",
+   "concepto": "Panel de ACM",
+   "archivo": "allende/WhatsApp Image 2025-06-27 at 12.56.02 PM (2).jpeg",
+   "drive_id": "1cw5CiQ2oVn6cMyZNlAIMPE66A1i-5jOD",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Allende NL) / Visitas / Fotos Allende",
+   "descripcion": "Opera en oficina móvil; no hay fachada con panel ACM"
+  },
+  {
+   "distribuidor": "allende",
+   "indicador": "proyecto",
+   "concepto": "Area de Exhibición Techada",
+   "archivo": "allende/WhatsApp Image 2025-06-27 at 12.56.01 PM (1).jpeg",
+   "drive_id": "17PS8PMkvsNxT84hSIDTZYvH_pGO9reod",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Allende NL) / Visitas / Fotos Allende",
+   "descripcion": "Unidades exhibidas a la intemperie, sin área techada"
+  },
+  {
+   "distribuidor": "apodaca",
+   "indicador": "proyecto",
+   "concepto": "Letrero Servicio Total Care",
+   "archivo": "apodaca/WhatsApp Image 2026-07-02 at 6.14.55 PM (1).jpeg",
+   "drive_id": "1niG4wRbPvBxVW7fCfVd-0K6LYBvnQd0x",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton_Apodaca) / Fotos Visitas / 20260715 Apodaca Avances",
+   "descripcion": "Letrero «SERVICIO | TOTAL CARE» en la fachada"
+  }
+ ],
+ "observaciones": [
+  {
+   "distribuidor": "apodaca",
+   "texto": "En Drive (carpeta Cummins) hay «Carta de aceptación inicio del proceso de certificación Apodaca» del 23-oct-2026. El Excel KPI's de Cummins sólo llega a ago-2026 (todo en 0). Verificar avance real."
+  },
+  {
+   "distribuidor": "escobedo",
+   "texto": "La foto del 21-ago-2026 muestra un tótem FOTON en el acceso, pero el Excel KPI's (oct-2026) marca «Totém» = 0. Verificar si cumple la especificación vigente.",
+   "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.51.06 AM (1).jpeg",
+   "drive_id": "17tx0Hq4kkm1SzcfZX6GDts2wP4jXaTpb",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
+   "descripcion": "Tótem FOTON en el acceso"
+  },
+  {
+   "distribuidor": "escobedo",
+   "texto": "Las fotos del 2-jul-2026 muestran mueble de recepción, escritorios y mesas con sillas, pero el Excel KPI's marca todo «Mobiliario» = 0. Verificar si el mobiliario cumple el estándar FOTON.",
+   "archivo": "escobedo/WhatsApp Image 2026-07-02 at 10.25.28 AM (5).jpeg",
+   "drive_id": "1o-N-0J4CcLE3dkcPAb682fhDolzKC5Ak",
+   "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260715_Avances",
+   "descripcion": "Mueble de recepción y exhibidor"
+  },
+  {
+   "distribuidor": "allende",
+   "texto": "Las únicas fotos disponibles son del 27-jun-2025 (más de 6 meses). Tomar fotos actuales en la visita."
+  }
+ ]
+}
