@@ -212,7 +212,8 @@
  "observaciones": [
   {
    "distribuidor": "apodaca",
-   "texto": "En Drive (carpeta Cummins) hay «Carta de aceptación inicio del proceso de certificación Apodaca» del 23-oct-2026. El Excel KPI's de Cummins sólo llega a ago-2026 (todo en 0). Verificar avance real."
+   "texto": "Existe carta de aceptación para iniciar la certificación Cummins (23-oct-2026), pero el KPI de oct-2026 marca los 7 requisitos en 0. Verificar avance real.",
+   "texto_presentacion": "Hay carta de aceptación para iniciar la certificación Cummins, pero el KPI marca los 7 requisitos en 0. Verificar avance real."
   },
   {
    "distribuidor": "escobedo",
@@ -220,7 +221,8 @@
    "archivo": "escobedo/WhatsApp Image 2026-08-21 at 9.51.06 AM (1).jpeg",
    "drive_id": "17tx0Hq4kkm1SzcfZX6GDts2wP4jXaTpb",
    "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260901_ Escobedo",
-   "descripcion": "Tótem FOTON en el acceso"
+   "descripcion": "Tótem FOTON en el acceso",
+   "texto_presentacion": "En campo hay un tótem FOTON en el acceso, pero el KPI marca «Tótem» en 0. Verificar si cumple la especificación vigente."
   },
   {
    "distribuidor": "escobedo",
@@ -228,11 +230,13 @@
    "archivo": "escobedo/WhatsApp Image 2026-07-02 at 10.25.28 AM (5).jpeg",
    "drive_id": "1o-N-0J4CcLE3dkcPAb682fhDolzKC5Ak",
    "drive_carpeta": "1_Activos / Grupo Velcen (Foton Escobedo Matriz) / Fotografias Visitas / Escobedo / 20260715_Avances",
-   "descripcion": "Mueble de recepción y exhibidor"
+   "descripcion": "Mueble de recepción y exhibidor",
+   "texto_presentacion": "En campo hay mueble de recepción, escritorios y mesas con sillas, pero el KPI marca todo el mobiliario en 0. Verificar si cumple el estándar FOTON."
   },
   {
    "distribuidor": "allende",
-   "texto": "Las únicas fotos disponibles son del 27-jun-2025 (más de 6 meses). Tomar fotos actuales en la visita."
+   "texto": "Las únicas fotos disponibles son del 27-jun-2025 (más de 6 meses). Tomar fotos actuales en la visita.",
+   "texto_presentacion": "Las fotos disponibles tienen más de 6 meses. Tomar fotos actuales en la visita."
   }
  ]
 }

@@ -1,0 +1,356 @@
+{
+  "_ayuda": "Explicación corta de cada pendiente: qué implica y qué se necesita para cerrarlo. La clave es el texto del Excel (no importan acentos ni mayúsculas). 'titulo' es el nombre corto para mostrar.",
+  "conceptos": {
+    "Totém": {
+      "titulo": "Tótem",
+      "texto": "Falta el tótem FOTON en el acceso. Pedir proyecto, permiso y fecha de instalación."
+    },
+    "Totém Direcciónal": {
+      "titulo": "Tótem direccional",
+      "texto": "Falta el tótem que guía a ventas y servicio. Definir ubicación e instalarlo."
+    },
+    "Letrero Refacciones Value Parts": {
+      "titulo": "Letrero Value Parts",
+      "texto": "Falta el letrero de refacciones Value Parts en fachada o mostrador."
+    },
+    "Letrero Servicio Total Care": {
+      "titulo": "Letrero Total Care",
+      "texto": "Falta el letrero Total Care en el área de servicio."
+    },
+    "Señaletica Interior": {
+      "titulo": "Señalética interior",
+      "texto": "Faltan los letreros interiores (áreas, oficinas, baños) con la imagen FOTON."
+    },
+    "Señaletica área de servicio": {
+      "titulo": "Señalética de servicio",
+      "texto": "Faltan letreros de recepción de servicio, bahías y rutas dentro del taller."
+    },
+    "Panel de ACM": {
+      "titulo": "Panel ACM",
+      "texto": "No hay fachada con panel ACM gris; depende del edificio definitivo."
+    },
+    "Logotipo": {
+      "titulo": "Logotipo",
+      "texto": "No hay logotipo FOTON en fachada; depende del edificio definitivo."
+    },
+    "Dealer name con cajillo": {
+      "titulo": "Nombre de la agencia",
+      "texto": "Falta el nombre de la agencia en cajillo sobre la fachada."
+    },
+    "Letras de Servicio": {
+      "titulo": "Letras de servicio",
+      "texto": "Faltan las letras SERVICIO en la entrada del taller."
+    },
+    "Pórtico": {
+      "titulo": "Pórtico",
+      "texto": "Falta el pórtico de acceso con la imagen FOTON."
+    },
+    "Tira Led fachada": {
+      "titulo": "Tira LED de fachada",
+      "texto": "Falta la iluminación LED de fachada."
+    },
+    "Caja": {
+      "titulo": "Caja",
+      "texto": "No hay área de caja en el showroom. Definir lugar y mueble."
+    },
+    "Area de Espera clientes": {
+      "titulo": "Área de espera",
+      "texto": "No hay área de espera para clientes. Falta sala con el mobiliario FOTON."
+    },
+    "Área para recepción": {
+      "titulo": "Recepción",
+      "texto": "No hay recepción a la entrada del showroom."
+    },
+    "Piso Tipo Marmól": {
+      "titulo": "Piso tipo mármol",
+      "texto": "Falta el piso tipo mármol del showroom."
+    },
+    "Area de Exhibición Techada": {
+      "titulo": "Exhibición techada",
+      "texto": "Las unidades se exhiben a la intemperie; falta área techada."
+    },
+    "Area de Exhibición Cerrada": {
+      "titulo": "Exhibición cerrada",
+      "texto": "No hay showroom cerrado para exhibir unidades."
+    },
+    "Area de ventas": {
+      "titulo": "Área de ventas",
+      "texto": "Falta área de ventas con escritorios para asesores."
+    },
+    "Area de atención a clientes": {
+      "titulo": "Atención a clientes",
+      "texto": "Falta área para atender y cerrar ventas con el cliente."
+    },
+    "Oficina Gerente Comercial": {
+      "titulo": "Oficina gerente comercial",
+      "texto": "Falta oficina para el gerente comercial."
+    },
+    "Baños": {
+      "titulo": "Baños",
+      "texto": "Faltan baños para clientes en el showroom."
+    },
+    "Muros y techo pintados color Blanco L-010 Marca Comex": {
+      "titulo": "Muros y techo blancos",
+      "texto": "Falta pintar muros y techo en blanco L-010 (Comex)."
+    },
+    "Luminaria": {
+      "titulo": "Luminaria",
+      "texto": "Falta la iluminación del showroom."
+    },
+    "Área para F&I": {
+      "titulo": "Área F&I",
+      "texto": "Falta el espacio para financiamiento y seguros."
+    },
+    "Pintura epóxica gris Oxford": {
+      "titulo": "Piso epóxico en almacén",
+      "texto": "El almacén no tiene piso con pintura epóxica gris Oxford."
+    },
+    "Piso con pintura epóxico Gris Oxford": {
+      "titulo": "Piso epóxico en taller",
+      "texto": "El piso del taller sigue en concreto. Falta aplicar pintura epóxica gris Oxford."
+    },
+    "Área de lavado de unidades": {
+      "titulo": "Área de lavado",
+      "texto": "No hay área para lavar unidades antes de entregarlas."
+    },
+    "Elevadores": {
+      "titulo": "Elevadores",
+      "texto": "No hay elevadores para unidades ligeras."
+    },
+    "Fosa": {
+      "titulo": "Fosa",
+      "texto": "No hay fosa (o elevador de 4 postes) para unidades pesadas."
+    },
+    "Elevadores de 4 postes o fosa": {
+      "titulo": "Elevador 4 postes o fosa",
+      "texto": "No hay elevador de 4 postes ni fosa para unidades pesadas."
+    },
+    "Polipasto o grúa viajera": {
+      "titulo": "Polipasto o grúa",
+      "texto": "No hay polipasto o grúa para bajar motores y componentes."
+    },
+    "Mesas de trabajo": {
+      "titulo": "Mesas de trabajo",
+      "texto": "Faltan mesas de trabajo para completar las bahías."
+    },
+    "Área de armado de conjuntos": {
+      "titulo": "Armado de conjuntos",
+      "texto": "No hay área para armar motores, transmisiones y diferenciales."
+    },
+    "Área aislada para Compresor de aire": {
+      "titulo": "Compresor aislado",
+      "texto": "El compresor no está en un cuarto aislado."
+    },
+    "Área de residuos peligrosos": {
+      "titulo": "Residuos peligrosos",
+      "texto": "Falta el almacén de residuos peligrosos con señalización."
+    },
+    "Baños para técnicos con lockers": {
+      "titulo": "Baños y lockers de técnicos",
+      "texto": "Los baños y lockers de técnicos están incompletos."
+    },
+    "Luminaria del área de taller": {
+      "titulo": "Luminaria de taller",
+      "texto": "La iluminación del taller está incompleta."
+    },
+    "Trampa de residuos": {
+      "titulo": "Trampa de residuos",
+      "texto": "Falta o está incompleta la trampa de grasas y residuos del drenaje."
+    },
+    "Área para herramienta especializada": {
+      "titulo": "Herramienta especializada",
+      "texto": "No hay área para guardar la herramienta especial FOTON."
+    },
+    "Vehículo de rescate carretero": {
+      "titulo": "Vehículo de rescate",
+      "texto": "Falta el vehículo equipado para servicio en carretera."
+    },
+    "Sala de Espera Operadores": {
+      "titulo": "Sala de operadores",
+      "texto": "No hay sala de espera para operadores."
+    },
+    "Delimitación de bahías con lineas amarillo tránsito": {
+      "titulo": "Bahías delimitadas",
+      "texto": "Faltan líneas amarillo tránsito en parte de las bahías."
+    },
+    "Site": {
+      "titulo": "Site",
+      "texto": "El cuarto de servidores y red no está terminado."
+    },
+    "Archivo": {
+      "titulo": "Archivo",
+      "texto": "Falta el área de archivo de documentos."
+    },
+    "Mueble de recepción": {
+      "titulo": "Mueble de recepción",
+      "texto": "Falta el mueble de recepción del estándar FOTON."
+    },
+    "Escritorios dobles con mampara para ejecutivos de venta y Sillas": {
+      "titulo": "Escritorios de ventas",
+      "texto": "Faltan escritorios dobles con mampara y sillas para asesores."
+    },
+    "Escritorio con sillas para Gerencia Comercial": {
+      "titulo": "Escritorio gerente comercial",
+      "texto": "Falta escritorio con sillas del estándar para el gerente comercial."
+    },
+    "Mesas con sillas para atención a clientes": {
+      "titulo": "Mesas de atención",
+      "texto": "Faltan mesas con sillas para atender clientes."
+    },
+    "Periqueras para mostrador de refacciones": {
+      "titulo": "Periqueras de mostrador",
+      "texto": "Faltan periqueras en el mostrador de refacciones."
+    },
+    "Exhibidor de Partes": {
+      "titulo": "Exhibidor de partes",
+      "texto": "Falta el exhibidor de refacciones para venta al público."
+    },
+    "Mueble de coffe break": {
+      "titulo": "Mueble de café",
+      "texto": "Falta el mueble de café para clientes."
+    },
+    "Totém ficha técnica de vehículos": {
+      "titulo": "Tótem de ficha técnica",
+      "texto": "Falta el tótem con ficha técnica junto a las unidades exhibidas."
+    },
+    "Escritorio con sillas para Gerencia de Refacciones": {
+      "titulo": "Escritorio gerente de refacciones",
+      "texto": "Falta escritorio con sillas del estándar."
+    },
+    "Escritorio con sillas para Almacenista": {
+      "titulo": "Escritorio almacenista",
+      "texto": "Falta escritorio con sillas del estándar."
+    },
+    "Escritorio con sillas para Ventas Refacciones": {
+      "titulo": "Escritorio ventas de refacciones",
+      "texto": "Falta escritorio con sillas del estándar."
+    },
+    "Escritorio con sillas para Gerencia de Servicio": {
+      "titulo": "Escritorio gerente de servicio",
+      "texto": "Falta escritorio con sillas del estándar."
+    },
+    "Escritorio con sillas para Jefe de Taller": {
+      "titulo": "Escritorio jefe de taller",
+      "texto": "Falta escritorio con sillas del estándar."
+    },
+    "Escritorio con sillas para Analista de Garantias": {
+      "titulo": "Escritorio analista de garantías",
+      "texto": "Falta escritorio con sillas del estándar."
+    },
+    "Escritorio con sillas para Asesor de Servicio": {
+      "titulo": "Escritorio asesor de servicio",
+      "texto": "Falta escritorio con sillas del estándar."
+    },
+    "Escritorio con sillas para Gerencia General": {
+      "titulo": "Escritorio gerente general",
+      "texto": "Falta escritorio con sillas del estándar."
+    },
+    "Escritorio con sillas para Admon. De Ventas y CRM": {
+      "titulo": "Escritorio adm. de ventas y CRM",
+      "texto": "Falta escritorio con sillas del estándar."
+    },
+    "Escritorio con sillas para Admon MKT": {
+      "titulo": "Escritorio marketing",
+      "texto": "Falta escritorio con sillas del estándar."
+    },
+    "Mesa con sillas para Sala de Juntas": {
+      "titulo": "Mesa de sala de juntas",
+      "texto": "Falta mesa con sillas para la sala de juntas."
+    },
+    "Sistema CRM": {
+      "titulo": "Sistema CRM",
+      "texto": "El CRM no está operando. Es el mismo pendiente del indicador CRM."
+    },
+    "Comedor Empelados": {
+      "titulo": "Comedor de empleados",
+      "texto": "El comedor está a medias. Falta terminar mobiliario y equipo."
+    },
+    "Estacionamiento clientes": {
+      "titulo": "Estacionamiento de clientes",
+      "texto": "El estacionamiento de clientes no está completo ni señalizado."
+    },
+    "Lugares reservados Estacionamiento clientes": {
+      "titulo": "Cajones reservados",
+      "texto": "Faltan cajones reservados y pintados para clientes."
+    },
+    "Certifciación Cummins": {
+      "titulo": "Certificación Cummins",
+      "texto": "La agencia no está certificada por Cummins. Ligado al indicador Cummins."
+    }
+  },
+  "indicadores": {
+    "crm": {
+      "falta": "El CRM no está operando.",
+      "necesita": "Dar de alta el CRM, asignar al administrativo de ventas como responsable y capacitar a los asesores."
+    },
+    "fotonet": {
+      "falta": "Fotonet no está operando.",
+      "necesita": "Dar de alta usuarios y capacitar."
+    },
+    "rifof": {
+      "falta": "No se ha entregado el RIFOF del mes.",
+      "necesita": "Enviar el reporte en la fecha establecida."
+    },
+    "diagnostico": {
+      "falta": "No tiene el equipo de diagnóstico FOTON.",
+      "necesita": "Comprar el equipo y capacitar a los técnicos."
+    },
+    "planpiso": {
+      "falta": "No tiene línea de plan piso.",
+      "necesita": "Abrir o renovar la línea con la financiera."
+    },
+    "kit": {
+      "falta": "No tiene el kit inicial de refacciones.",
+      "necesita": "Colocar el pedido del kit inicial."
+    },
+    "pld": {
+      "falta": "No ha entregado el formato PLD.",
+      "necesita": "Llenar y enviar el formato de prevención de lavado de dinero."
+    },
+    "anexos": {
+      "falta": "No ha firmado los anexos operativos.",
+      "necesita": "Firmar el anexo de requerimientos anuales."
+    }
+  },
+  "cummins": {
+    "Contrato": "Firmar contrato con Cummins.",
+    "Linea de crédito": "Abrir línea de crédito con Cummins.",
+    "Cuenta QSOL": "Dar de alta la cuenta QSOL (portal técnico Cummins).",
+    "Inversión en herramienta": "Comprar la herramienta Cummins requerida.",
+    "Inversión en partes": "Comprar el inventario inicial de partes Cummins.",
+    "Ceritificación Analista de Garantías": "Certificar al analista de garantías.",
+    "Ceritificación Tecnicos o Gerente de Posventa o Gerente de Taller": "Certificar a 2 personas: técnicos, gerente de posventa o jefe de taller."
+  },
+  "puestos": {
+    "Caja y/o Auxiliar Contable ( Facturista )": "Caja / auxiliar contable",
+    "Recepcionista / Conmutador": "Recepcionista",
+    "Asesores de ventas Tractocamiones (HDT)": "Asesor de ventas HDT",
+    "Asesores de ventas Camiones (L&MD)": "Asesor de ventas L&MD",
+    "Asesor de ventas digital ( Seguimiento Biky)": "Asesor digital (Biky)",
+    "Asesor de Servicio o Ventas": "Asesor de servicio",
+    "Técnico 'B' (Técnico mecánico)": "Técnico B (mecánico)",
+    "Asesores de ventas Vehículos Pick Ups, Vanes & MT ( Passengers)": "Asesor de ventas Pick Ups, Vanes y MT",
+    "Asesor de ventas Vehículos Eléctricos": "Asesor de ventas VE",
+    "Técnico Vehículos Eléctricos": "Técnico VE",
+    "Administrativo de Ventas y Responsable Sistema CRM": "Adm. de ventas y CRM",
+    "Encargado de Marketing": "Marketing"
+  },
+  "areas": {
+    "Imagén Corporativa": "Imagen corporativa",
+    "ShowRoom": "Showroom",
+    "Almacén de Refacciones": "Almacén de refacciones",
+    "Taller": "Taller",
+    "Áreas administrativas": "Áreas administrativas",
+    "Mobiliario": "Mobiliario",
+    "Generales": "Generales"
+  },
+  "cummins_corto": {
+    "Contrato": "contrato",
+    "Linea de crédito": "línea de crédito",
+    "Cuenta QSOL": "cuenta QSOL",
+    "Inversión en herramienta": "herramienta",
+    "Inversión en partes": "partes",
+    "Ceritificación Analista de Garantías": "certificar analista de garantías",
+    "Ceritificación Tecnicos o Gerente de Posventa o Gerente de Taller": "certificar 2 técnicos o jefes"
+  }
+}
