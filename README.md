@@ -63,7 +63,7 @@ Cambios contra la versión anterior: *Software Operativo* se separó en **CRM** 
 refacciones* ahora se llama **Kit de Refacciones**; se agregaron **RIFOF**, **Plan Piso** y **PLD**.
 
 **Allende** es showroom y se rige por Apodaca y Escobedo: CRM, Fotonet, Kit de Refacciones, Equipo de
-Diagnóstico y Cummins **no aplican** y no entran a su promedio (`no_aplica` en `config.json`). Su
+Diagnóstico, Cummins y Personal **no aplican** y no entran a su promedio (`no_aplica` en `config.json`). Su
 `mensaje_clave` («Es necesario definir el proyecto para la agencia.») se muestra en la presentación,
 en la propuesta y como primer renglón de su plan.
 
@@ -74,9 +74,9 @@ en la propuesta y como primer renglón de su plan.
   «certificación de técnicos» con 1 de 2 vale 50%.
 - **% del indicador** = promedio de sus conceptos. Binarios: 100% o 0%.
 - **% General de la agencia** = promedio simple de sus indicadores aplicables (11 en Apodaca y
-  Escobedo, 6 en Allende).
+  Escobedo, 5 en Allende).
 - **Total del grupo** = promedio de **todos** los indicadores aplicables de las tres agencias
-  (28, Allende incluido). Proyecto del grupo = suma del avance de los 234 elementos / 234.
+  (27, Allende incluido). Proyecto del grupo = suma del avance de los 234 elementos / 234.
 - **% por área de proyecto** (Imagen corporativa, Showroom, Almacén, Taller, Áreas administrativas,
   Mobiliario, Generales): cada área es un bloque aparte con elementos, cumple, faltan y %.
 - **Escenario de mobiliario:** cuánto subirían proyecto y general si el mobiliario actual se valida
@@ -89,8 +89,8 @@ Resultado al 30-oct-2026:
 |---|---|---|---|---|
 | Apodaca | 73.5% amarillo | 53.7% | 70 | 72.9% / 75.3% |
 | Escobedo | 92.2% verde | 66.7% | 47 | 85.9% / 94.0% |
-| Allende | 78.9% amarillo | 30.6% | 29 | 47.2% / 81.7% (sólo si cuenta la oficina móvil) |
-| **Grupo** | **82.0% verde** | **55.6%** | **146** | 74.4% / 84.0% |
+| Allende | 86.1% verde | 30.6% | 25 | 47.2% / 89.4% (sólo si cuenta la oficina móvil) |
+| **Grupo** | **83.5% verde** | **55.6%** | **142** | 74.4% / 85.5% |
 
 ## Semáforo (`config.json` → `semaforo`)
 
@@ -150,17 +150,17 @@ Si aparece un concepto nuevo sin explicación, los generadores avisan en consola
 logo, tipografías (Arial Black / Arial) y colores. Las diapositivas de muestra del template no se
 incluyen. También se guarda en PDF (`Grupo_Velcen_Estatus_nov2026.pdf`) para abrirla directo.
 
-Versión ejecutiva (28 diapositivas):
+Versión ejecutiva (27 diapositivas):
 
 | # | Contenido |
 |---|---|
 | 1–4 | Portada, resumen ejecutivo (total del grupo y dos semáforos por agencia), matriz de 11 indicadores y escenario de mobiliario. |
 | 5–11 | Apodaca: presentación de la agencia (calificación, foto de fachada y los 11 indicadores en tarjetas), proyecto por área (gráfica y tabla), pendientes por área con explicación (4) y personal. |
 | 12–17 | Escobedo: lo mismo (pendientes en 3). |
-| 18–22 | Allende: lo mismo (pendientes en 2), con «Es necesario definir el proyecto para la agencia». |
-| 23 | Evidencia (fotos) y puntos a validar en la visita. |
-| 24–27 | Plan de trabajo por agencia: pendiente, qué falta, prioridad, y Responsable, Fecha compromiso, Estatus y Comentarios en blanco para llenar en la visita. |
-| 28 | Siguientes pasos. |
+| 18–21 | Allende: presentación de la agencia, proyecto por área y pendientes (2), con «Es necesario definir el proyecto para la agencia». Sin personal (no aplica). |
+| 22 | Evidencia (fotos) y puntos a validar en la visita. |
+| 23–26 | Plan de trabajo por agencia: pendiente, qué falta, prioridad, y Responsable, Fecha compromiso, Estatus y Comentarios en blanco para llenar en la visita. |
+| 27 | Siguientes pasos. |
 
 - **Pendientes:** cada área es un bloque a todo el ancho con su avance, conteo y barra; cada pendiente
   lleva su nombre y una explicación corta. Las alturas se calculan con la medida real de la letra para
@@ -171,7 +171,7 @@ Versión ejecutiva (28 diapositivas):
 Lo que cumple se muestra en una línea o en su tarjeta; el detalle es para lo pendiente. Cálculos y
 fuentes van en las notas del orador. Gráficas y tablas son editables en PowerPoint.
 
-Versión extendida (39 diapositivas, agrega por agencia qué falta por indicador, mobiliario, Cummins y evidencia):
+Versión extendida (38 diapositivas, agrega por agencia qué falta por indicador, mobiliario, Cummins y evidencia):
 
 ```bash
 python3 presentacion/generar_presentacion.py --completa
@@ -199,7 +199,7 @@ template FOTON:
   abre la sucursal filtrada por ese indicador.
 - **Detalle del pendiente** (clic): qué falta, qué implica, avance, foto si hay, y los campos del
   plan; anterior / siguiente.
-- **Plan de trabajo:** 147 renglones (146 pendientes + definir el proyecto de Allende) con filtros por
+- **Plan de trabajo:** 143 renglones (142 pendientes + definir el proyecto de Allende) con filtros por
   sucursal, indicador, estado y estatus; se guarda en el navegador; **Exportar a Excel** (una hoja por
   sucursal) e **Imprimir / PDF**. Cada pendiente tiene un id estable, así que lo capturado se
   conserva al regenerar con datos nuevos.

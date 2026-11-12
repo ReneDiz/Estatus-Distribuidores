@@ -321,7 +321,7 @@ def resumen_ejecutivo(dk, ctx):
     t = ctx["total"]
     s = dk.nueva(notas=(
         f"Total del grupo: promedio de los {t['n_indicadores']} indicadores aplicables de las tres agencias "
-        f"(Allende incluido, sin sus 5 indicadores que no aplican). Proyecto del grupo: suma del avance de los "
+        f"(Allende incluido, sin sus indicadores que no aplican). Proyecto del grupo: suma del avance de los "
         f"{t['elementos']} elementos entre {t['elementos']}. Semáforo general: verde desde 80%, amarillo 50-79%. "
         f"Proyecto: verde desde 80%, amarillo 50-79%."))
     titulo(s, "Resumen ejecutivo", f"{ctx['grupo']['nombre']} · corte {g.fecha_corta(ctx['corte'])} · "
@@ -363,7 +363,7 @@ def resumen_ejecutivo(dk, ctx):
 def matriz(dk, ctx):
     s = dk.nueva(notas="Cada celda es el % del indicador al corte. Binarios: 100% o 0%. Cummins y proyecto: promedio "
                        "de sus conceptos. Personal: plazas cubiertas / requeridas del Sistema de Personal. "
-                       "En Allende no aplican CRM, Fotonet, Kit, Diagnóstico ni Cummins (showroom).")
+                       "En Allende no aplican CRM, Fotonet, Kit, Diagnóstico, Cummins ni Personal (showroom).")
     titulo(s, "Los 11 indicadores por agencia", "Lo que está en rojo o amarillo es pendiente de prioridad alta")
     ds = ctx["dists"]
     filas = [[{"t": "Indicador"}] + [{"t": d["corto"], "align": "c"} for d in ds]]
