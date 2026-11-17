@@ -16,3 +16,10 @@ Fuente: capturas del Sistema de Personal que compartió el usuario (detalle de E
   Extra: 4, sin detalle por puesto.
 
 Efecto: Apodaca general 76.2% (63 pendientes), Escobedo 95.4% (40), grupo 85.9% (128 pendientes).
+
+## V5 (17-nov-2026)
+
+- Apodaca: personal reportado por Liliana Ozoria el jueves 12 de noviembre. 6 vacantes de 40 plazas
+  requeridas = 15% de personal faltante (34 de 40 cubiertas = 85%).
+- Allende: sólo aplica Desarrollo de Proyecto, en 0% (no se cuenta con el proyecto). General 0%.
+- Grupo con Allende en 0%: general 82.1% (23 indicadores), proyecto 50.9% (234 elementos).
