@@ -208,6 +208,33 @@ template FOTON:
 
 No reemplaza a la herramienta actual; es una propuesta para validar.
 
+## Propuesta con fotos del checklist (`propuesta/herramienta_estatus_PROPUESTA_fotos.html`)
+
+```bash
+python3 propuesta/generar_propuesta_fotos.py
+```
+
+Es la misma propuesta (no la modifica: `generar_propuesta.py` y su HTML quedan igual) más, por agencia,
+**todos** los elementos del Desarrollo de Proyecto con la foto del «Check list de seguimiento de
+proyecto»:
+
+- En «Desarrollo de proyecto por área», el selector **Ver: Sólo pendientes / Todos los elementos con
+  foto**. En «Todos», cada área muestra sus elementos en tarjetas con foto y estatus, con filtros
+  Cumple / Pendiente / Con foto / Sin foto.
+- Clic en un elemento: abre su ficha con la foto, el estatus del KPI, el % y el comentario del checklist
+  y, si está pendiente, los campos del plan. Clic en la foto: pantalla completa (← → y Esc).
+- En «Sólo pendientes», cada pendiente que tiene foto muestra su miniatura.
+
+Configuración en `datos/checklists/checklists.json`: archivo del checklist por agencia y
+`equivalencias` (nombre del concepto en el KPI → nombre del elemento en el checklist cuando no son
+iguales). `checklist.py` lee el Excel: columnas por encabezado (Lineamiento, Elemento, Fotografías,
+% de cumplimiento, Fecha de revisión, Comentario) y las fotos ancladas a la fila del elemento o
+colocadas dentro de la celda.
+
+Hoy: Apodaca con `Check_list_Seguimiento_proyecto_Apodaca_con_fotos.xlsx` (12-nov-2026): 99 de 99
+elementos ligados y 36 fotos. Pendientes de cargar (más de 10 MB, el conector de Drive no los descarga):
+`20261030 Check list Seguimiento proyecto Apodaca V1.xlsx` y `... Escobedo.xlsx` (17-nov-2026).
+
 ## Agregar otro distribuidor o grupo
 
 En `config.json` → `grupos`:

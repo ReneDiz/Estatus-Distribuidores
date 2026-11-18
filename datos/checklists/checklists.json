@@ -1,0 +1,32 @@
+{
+  "_ayuda": "Checklist de seguimiento de proyecto con fotos por agencia. 'archivo' es relativo a datos/checklists/. Las fotos se ligan al elemento por su renglón. 'equivalencias' liga el nombre del concepto en el KPI con el nombre del elemento en el checklist cuando no son iguales (no importan acentos ni mayúsculas).",
+  "agencias": {
+    "apodaca": {
+      "archivo": "apodaca_checklist_con_fotos_20261112.xlsx",
+      "fuente": "Check_list_Seguimiento_proyecto_Apodaca_con_fotos.xlsx (Drive, 12-nov-2026)",
+      "drive_id": "1wVpEat3tOTsB0ABECMiIYh2BNg6Z4eAC"
+    }
+  },
+  "pendientes_de_cargar": {
+    "apodaca": "20261030 Check list Seguimiento proyecto Apodaca V1.xlsx (17-nov-2026, 37 MB)",
+    "escobedo": "20261030 Check list Seguimiento proyecto Escobedo.xlsx (17-nov-2026, 98 MB)"
+  },
+  "equivalencias": {
+    "Piso Tipo Marmól": "Piso Epóxico tipo Mármol",
+    "1/3 de la pared con pintara vínilca gris Oxford": "1/3 de la pared con pintura vínica gris Oxford",
+    "Elevadores": "Elevadores para P&V",
+    "Alineadora": "Alienadora",
+    "Área o máquina de lavdo de piezas": "Área o máquina de lavado de piezas",
+    "Baños para técnicos con lockers": "Baños para técnicos",
+    "Área de Marketing": "Área de Marketing*",
+    "Escritorios dobles con mampara para ejecutivos de venta y Sillas": "Escritorios para ejecutivos de venta Sillas",
+    "Mesas con sillas para atención a clientes": "Mesa con sillas para atención a clientes",
+    "Periqueras para mostrador de refacciones": "Periquera para mostrador de refacciones",
+    "Escritorio con sillas para Admon. De Ventas y CRM": "Escritorio con sillas para Admón.. De Ventas y CRM*",
+    "Escritorio con sillas para Admon MKT": "Escritorio con sillas para Admón. MKT*",
+    "Seguro de Plan Piso": "Póliza de Seguro Plan Piso",
+    "Pedido Inicial de Unidades ( 3 meses venta)": "Pedido Inicial de Unidades",
+    "Lugares reservados Estacionamiento clientes": "Lugares reservados para personas con capacidades diferentes",
+    "Certifciación Cummins": "Certificación Cummins"
+  }
+}
